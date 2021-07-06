@@ -70,14 +70,14 @@ $pass = (isset($_POST['password'])) ? $_POST['password'] : null;
 
 if ($email && $pass !== null) {
 
+  $query = "UPDATE team SET password = ? WHERE email_t = ?";
+  $stmt = $conn->prepare($query);
+  $stmt->bind_param('ss',$pass,$email);
+  $result = $stmt->execute();	
 
- $query = ("UPDATE team SET password = '$pass' WHERE email_t = '$email'");
-
-$result = mysql_query($query);	
-
-if($query){
-	echo("<br><b><br><p> <center> <font color=white font face='Courier'> Password registrata! Clicca su <a href='login.php'> Login </a> per accedere. </b></center></p><br><br> ");
-} 
+  if ($query) { /* the control should be done on result and not on query */
+	  echo("<br><b><br><p> <center> <font color=white font face='Courier'> Password registrata! Clicca su <a href='login.php'> Login </a> per accedere. </b></center></p><br><br> ");
+  } 
 }	
 	
 ?>	
