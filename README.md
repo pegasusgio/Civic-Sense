@@ -1,5 +1,5 @@
 # Civic-Sense
-Master Degree in Computer Science
+Master Degree in Computer Science A.A. 2020/2021
 Exam of Secure Software Engineering
 
 Team components:
