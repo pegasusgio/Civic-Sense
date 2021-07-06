@@ -10,15 +10,19 @@ if ($cod == null) {
 echo ("<p> <center> <font color=black font face='Courier'> Compila tutti i campi.</center></p>");
 }
 elseif ($cod !== null){
-	$resultC = mysqli_query($conn,"SELECT * FROM team WHERE codice =' $cod'");
+	$query = "SELECT * FROM team WHERE codice = '?'";
+	$stmt = $conn->prepare($query);
+	$stmt->bind_param('s',$cod);
+	$resultC = $stmt->execute();
 	if($resultC){
 		$row = mysqli_fetch_assoc($resultC);
 		if($cod == $row['codice']){
-			$query = "DELETE FROM team WHERE codice = '$cod'";
+			$query = "DELETE FROM team WHERE codice = '?'";
+			$stmt = $conn->prepare($query);
+			$stmt->bind_param('s',$cod);
+			$result = $stmt->execute();
 
-			$result = mysqli_query($conn,$query);	
-
-			if($query){
+			if($query){ /* the control should be done on result and not on query */
 				echo("<br><b><br><p> <center> <font color=black font face='Courier'> Aggiornamento avvenuto correttamente. Ricarica la pagina per aggiornare la tabella.</b></center></p><br><br> ");
 			} 
 		}else{
