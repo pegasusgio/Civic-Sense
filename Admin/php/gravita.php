@@ -12,9 +12,10 @@ if (isset($_POST['submit'])){
 
 if ($id && $stato !== null) {
 
- $query = ("UPDATE segnalazioni SET stato = $stato WHERE id = $id");
-
-$result = mysql_query($query);	
+ $query = "UPDATE segnalazioni SET stato = ? WHERE id = ?";
+ $stmt = $conn->prepare($query);
+ $stmt->bind_param('ss',$stato,$id);
+ $result = $stmt->execute();
 
 if($result){
 
