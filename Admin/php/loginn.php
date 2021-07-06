@@ -11,7 +11,7 @@
 			}
 			else
 			{
-				echo 'Accesso negato alla sezione riservata.La password è errata!';
+				echo 'Accesso negato alla sezione riservata.La password ï¿½ errata!';
 			}
 		}
 		else
@@ -21,8 +21,10 @@
 	        mysql_select_db ("civicsense") or die ("DataBase non trovato"); #connessione al db
 
 
-			$sql = 'SELECT * FROM team WHERE email_t = ' .$email. ';';
-			$result = mysql_query($sql);	
+			$query = "SELECT * FROM team WHERE email_t = ?";
+			$stmt = $conn->prepare($query);
+			$stmt->bind_param('s',$email);
+			$result = $stmt->execute();	
 
 			if (mysql_num_rows($result) > 0) {
 	   
@@ -31,7 +33,7 @@
 					if($password != $row["password"] || $email != $row["email_t"])
 					{
 						//CODICE JAVASCRIPT
-						echo 'ATTENZIONE: La password o la email inserita non è corretta!';
+						echo 'ATTENZIONE: La password o la email inserita non ï¿½ corretta!';
 					}
 					else if ($password == $row["password"] || $email == $row["email_t"]){
 						echo 'Accesso consentito area riservata (TEAM)';
