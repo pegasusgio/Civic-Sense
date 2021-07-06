@@ -1,0 +1,16 @@
+
+
+#chartdiv {
+  width: 98%;
+  height: 340px;
+  background: white;
+  background: linear-gradient(to bottom, #626dd4, #5d3bb4);
+  color: #fff;
+  font-weight: 100;
+  overflow: hidden;
+  margin-left:1%;
+}
+
+.amcharts-graph-g4 {
+  filter: url(#blur);
+}
