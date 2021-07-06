@@ -255,17 +255,18 @@ if (isset($_POST['submit'])){
 if ($idt && $grav !== null) {
 
   $resultC = mysqli_query($conn,"SELECT * FROM segnalazioni WHERE tipo = '4'");
-  if($resultC){
+  if ($resultC) {
     $row = mysqli_fetch_assoc($resultC);
-    if($id == $row['id']){
-      $query = "UPDATE segnalazioni SET gravita = '$grav' WHERE id = '$idt'";
+    if ($id == $row['id']) {
+      $query = "UPDATE segnalazioni SET gravita = ? WHERE id = ?";
+      $stmt = $conn->prepare($query);
+      $stmt->bind_param('ss',$grav,$idt);
+      $result = $stmt->execute();
 
-      $result = mysqli_query($conn,$query); 
-
-      if($query){
+      if ($query) {
         echo("<br><b><br><p> <center> <font color=black font face='Courier'> Aggiornamento avvenuto correttamente. Ricarica la pagina per aggiornare la tabella.</b></center></p><br><br> ");
       } 
-    }else{
+    } else {
       echo "<p> <center> <font color=black font face='Courier'> Inserisci ID esistente.</b></center></p>";
     }
   }
