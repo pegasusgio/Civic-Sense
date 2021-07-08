@@ -18,23 +18,23 @@ if (isset($_SESSION['idT'])) {
     echo "
     <tr>
      
-                <td>" . $row['id'] . " <br></td>
+                <td>" . filter_var($row['id'], FILTER_SANITIZE_NUMBER_INT) . " <br></td>
                 
-                <td>" . $row['datainv'] . " <br></td> 
+                <td>" . filter_var($row['datainv'], FILTER_SANITIZE_STRING) . " <br></td> 
                 
-              <td>" . $row['orainv'] . "<br></td>
+              <td>" . filter_var($row['orainv'], FILTER_SANITIZE_STRING) . "<br></td>
 
-               <td>" . $row['via'] . "<br></td>
+               <td>" . filter_var($row['via'], FILTER_SANITIZE_STRING) . "<br></td>
 
-                <td>" . $row['descrizione'] . "<br></td>
+                <td>" . filter_var($row['descrizione'], FILTER_SANITIZE_STRING) . "<br></td>
 
-                 <td><img width='200px' height='200px' src=" . $upload_path . $row['foto'] . "><br></td>
+                 <td><img width='200px' height='200px' src=" . $upload_path . filter_var($row['foto'], FILTER_SANITIZE_STRING) . "><br></td>
 				  
-				   <td>" . $row['tipo'] . "<br></td>
+				   <td>" . filter_var($row['tipo'], FILTER_SANITIZE_NUMBER_INT) . "<br></td>
 
-                   <td>" . $row['stato'] . "<br></td>
+                   <td>" . filter_var($row['stato'], FILTER_SANITIZE_STRING) . "<br></td>
 
-                   <td>" . $row['gravita'] . "<br></td>
+                   <td>" . filter_var($row['gravita'], FILTER_SANITIZE_NUMBER_INT) . "<br></td>
                
           </tr> ";
   }

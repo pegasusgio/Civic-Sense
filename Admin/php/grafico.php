@@ -30,7 +30,7 @@ Where  month(datainv) = 01 ");
             echo   "
 	
 		       
-			  " . $row['cont'] . "  
+			  " . filter_var($row['cont'], FILTER_SANITIZE_NUMBER_INT) . "  
 
 	";
           }
@@ -62,7 +62,7 @@ Where month(datainv) = 02 ");
                     echo   "
 	
 		       
-			  " . $row['cont'] . "  
+			  " . filter_var($row['cont'], FILTER_SANITIZE_NUMBER_INT) . "  
 
 	";
                   }
@@ -88,7 +88,7 @@ Where month(datainv) = 03 ");
                     echo   "
 	
 		       
-			  " . $row['cont'] . "  
+			  " . filter_var($row['cont'], FILTER_SANITIZE_NUMBER_INT) . "  
 
 	";
                   }
@@ -114,7 +114,7 @@ Where month(datainv) = 04  ");
                     echo   "
 	
 		       
-			  " . $row['cont'] . "  
+			  " . filter_var($row['cont'], FILTER_SANITIZE_NUMBER_INT) . "  
 
 	";
                   }
@@ -140,7 +140,7 @@ Where month(datainv) = 05 ");
                     echo   "
 	
 		       
-			  " . $row['cont'] . "  
+			  " . filter_var($row['cont'], FILTER_SANITIZE_NUMBER_INT) . "  
 
 	";
                   }
@@ -166,7 +166,7 @@ Where month(datainv) = 06 ");
                     echo   "
 	
 		       
-			  " . $row['cont'] . "  
+			  " . filter_var($row['cont'], FILTER_SANITIZE_NUMBER_INT) . "  
 
 	";
                   }
@@ -192,7 +192,7 @@ Where month(datainv) = 07  ");
                     echo   "
 	
 		       
-			  " . $row['cont'] . "  
+			  " . filter_var($row['cont'], FILTER_SANITIZE_NUMBER_INT) . "  
 
 	";
                   }
@@ -218,7 +218,7 @@ Where month(datainv) = 08  ");
                     echo   "
 	
 		       
-			  " . $row['cont'] . "  
+			  " . filter_var($row['cont'], FILTER_SANITIZE_NUMBER_INT) . "  
 
 	";
                   }
@@ -244,7 +244,7 @@ Where month(datainv) = 09  ");
                     echo   "
 	
 		       
-			  " . $row['cont'] . "  
+			  " . filter_var($row['cont'], FILTER_SANITIZE_NUMBER_INT) . "  
 
 	";
                   }
@@ -270,7 +270,7 @@ Where month(datainv) = 10  ");
                     echo   "
 	
 		       
-			  " . $row['cont'] . "  
+			  " . filter_var($row['cont'], FILTER_SANITIZE_NUMBER_INT) . "  
 
 	";
                   }
@@ -296,7 +296,7 @@ Where month(datainv) = 11  ");
                     echo   "
 	
 		       
-			  " . $row['cont'] . "  
+			  " . filter_var($row['cont'], FILTER_SANITIZE_NUMBER_INT) . "  
 
 	";
                   }
@@ -322,7 +322,7 @@ Where month(datainv) = 12 ");
                     echo   "
 	
 		       
-			  " . $row['cont'] . "  
+			  " . filter_var($row['cont'], FILTER_SANITIZE_NUMBER_INT) . "  
 
 ";
                   }

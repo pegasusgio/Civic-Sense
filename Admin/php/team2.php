@@ -9,13 +9,13 @@ if (mysqli_num_rows($query) > 0) {
         echo "
     <tr>
      
-                <td>" . $row['id'] . " <br></td>
+                <td>" . filter_var($row['id'], FILTER_SANITIZE_NUMBER_INT) . " <br></td>
                 
-                <td>" . $row['via'] . " <br></td> 
+                <td>" . filter_var($row['via'], FILTER_SANITIZE_STRING) . " <br></td> 
                 
-              <td>" . $row['gravita'] . "<br></td>
+              <td>" . filter_var($row['gravita'], FILTER_SANITIZE_STRING) . "<br></td>
 			  
-			    <td>" . $row['tipo'] . "<br></td>
+			    <td>" . filter_var($row['tipo'], FILTER_SANITIZE_NUMBER_INT) . "<br></td>
                
           </tr> ";
     }

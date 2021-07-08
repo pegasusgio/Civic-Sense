@@ -30,7 +30,7 @@ Where month(datainv) = 01 AND tipo = '2' ");
             echo   "
 	
 		       
-			  " . $row['cont'] . "  
+			  " . filter_var($row['cont'], FILTER_SANITIZE_NUMBER_INT) . "  
 
 	";
           }
@@ -63,7 +63,7 @@ Where month(datainv) = 02 AND tipo = '2'");
                     echo   "
 	
 		       
-			  " . $row['cont'] . "  
+			  " . filter_var($row['cont'], FILTER_SANITIZE_NUMBER_INT) . "  
 
 	";
                   }
@@ -90,7 +90,7 @@ Where month(datainv) = 03 AND tipo = '2' ");
                     echo   "
 	
 		       
-			  " . $row['cont'] . "  
+			  " . filter_var($row['cont'], FILTER_SANITIZE_NUMBER_INT) . "  
 
 	";
                   }
@@ -116,7 +116,7 @@ Where month(datainv) = 04 AND tipo = '2' ");
                     echo   "
 	
 		       
-			  " . $row['cont'] . "  
+			  " . filter_var($row['cont'], FILTER_SANITIZE_NUMBER_INT) . "  
 
 	";
                   }
@@ -142,7 +142,7 @@ Where month(datainv) = 05 AND tipo = '2' ");
                     echo   "
 	
 		       
-			  " . $row['cont'] . "  
+			  " . filter_var($row['cont'], FILTER_SANITIZE_NUMBER_INT) . "  
 
 	";
                   }
@@ -168,7 +168,7 @@ Where month(datainv) = 06 AND tipo = '2' ");
                     echo   "
 	
 		       
-			  " . $row['cont'] . "  
+			  " . filter_var($row['cont'], FILTER_SANITIZE_NUMBER_INT) . "  
 
 	";
                   }
@@ -194,7 +194,7 @@ Where month(datainv) = 07 AND tipo = '2' ");
                     echo   "
 	
 		       
-			  " . $row['cont'] . "  
+			  " . filter_var($row['cont'], FILTER_SANITIZE_NUMBER_INT) . "  
 
 	";
                   }
@@ -220,7 +220,7 @@ Where month(datainv) = 08 AND tipo = '2' ");
                     echo   "
 	
 		       
-			  " . $row['cont'] . "  
+			  " . filter_var($row['cont'], FILTER_SANITIZE_NUMBER_INT) . "  
 
 	";
                   }
@@ -246,7 +246,7 @@ Where month(datainv) = 09 AND tipo = '2' ");
                     echo   "
 	
 		       
-			  " . $row['cont'] . "  
+			  " . filter_var($row['cont'], FILTER_SANITIZE_NUMBER_INT) . "  
 
 	";
                   }
@@ -272,7 +272,7 @@ Where month(datainv) = 10 AND tipo = '2' ");
                     echo   "
 	
 		       
-			  " . $row['cont'] . "  
+			  " . filter_var($row['cont'], FILTER_SANITIZE_NUMBER_INT) . "  
 
 	";
                   }
@@ -298,7 +298,7 @@ Where month(datainv) = 11 AND tipo = '2' ");
                     echo   "
 	
 		       
-			  " . $row['cont'] . "  
+			  " . filter_var($row['cont'], FILTER_SANITIZE_NUMBER_INT) . "  
 
 	";
                   }
@@ -324,7 +324,7 @@ Where month(datainv) = 12 AND tipo = '2' ");
                     echo   "
 	
 		       
-			  " . $row['cont'] . "  
+			  " . filter_var($row['cont'], FILTER_SANITIZE_NUMBER_INT) . "  
 
 ";
                   }

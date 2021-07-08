@@ -169,7 +169,7 @@
               if ($result) {
                 while ($row = mysqli_fetch_assoc($result)) {
                   echo "
-            var location = new google.maps.LatLng(" . $row['latitudine'] . "," . $row['longitudine'] . ");
+            var location = new google.maps.LatLng(" . filter_var($row['latitudine'], FILTER_SANITIZE_NUMBER_FLOAT) . "," . filter_var($row['longitudine'], FILTER_SANITIZE_NUMBER_FLOAT) . ");
             var marker = new google.maps.Marker({
               map: map,
               position: location
