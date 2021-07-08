@@ -88,6 +88,8 @@
 
         if ($password == openssl_decrypt($row['password'], "AES-128-ECB", $var['SECRETKEY'])) {
           echo 'Accesso consentito alla sezione riservata';
+          $_SESSION['email'] = $email;
+          $_SESSION['password'] = $password;
           echo '<script>window.location.href = "index.php";</script>';
         } else {
           echo 'Accesso negato alla sezione riservata. La password è errata!';

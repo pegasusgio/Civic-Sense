@@ -4,9 +4,11 @@ session_start();
 //adatto a tutti i domini (GMAIL,LIBERO.HOTMAIL)
 //classi per l'invio dell'email (PHPMailer 5.2)
 
+use Exception as GlobalException;
+use FFI\Exception as FFIException;
+use PHPMailer\PHPMailer\PHPMailer;
+use PHPMailer\PHPMailer\Exception;
 
-require('phpmailer/class.phpmailer.php');
-include('phpmailer/class.smtp.php');
 $conn = mysqli_connect("localhost", "root", "", "civicsense") or die("Connessione non riuscita");
 
 if (isset($_POST['id']) && isset($_POST['stato']) && isset($_POST['codice'])) {
@@ -42,6 +44,8 @@ if (isset($_POST['id']) && isset($_POST['stato']) && isset($_POST['codice'])) {
 					$result3 = $stmt3->get_result();
 					$row1 = mysqli_fetch_assoc($result2);
 
+					$var = parse_ini_file("config.ini");
+
 					$mail = new PHPMailer(true);
 
 					try {
@@ -56,12 +60,12 @@ if (isset($_POST['id']) && isset($_POST['stato']) && isset($_POST['codice'])) {
 						$mail->AddAddress($_SESSION['email']);
 						$mail->SetFrom($row1['email']);
 						$mail->Subject = 'Nuova Segnalazione';
-						$mail->Body = "Salve team " + $row['team'] + ", ci è arrivata una nuova segnalazione e vi affido il compito di risoverla"; //Messaggio da inviare
+						$mail->Body = "Salve team " . $row['codice'] . ", ci è arrivata una nuova segnalazione e vi affido il compito di risoverla"; //Messaggio da inviare
 						$mail->Send();
 						echo "Message Sent OK";
-					} catch (phpmailerException $e) {
-						echo $e->errorMessage(); //Errori da PHPMailer
 					} catch (Exception $e) {
+						echo $e->errorMessage(); //Errori da PHPMailer
+					} catch (GlobalException $e) {
 						echo $e->getMessage(); //Errori da altrove
 					}
 				}
@@ -90,9 +94,9 @@ if (isset($_POST['id']) && isset($_POST['stato']) && isset($_POST['codice'])) {
 					$mail->Body = "Il problema presente in " + $row['via'] + " è stata risolta"; //Messaggio da inviare
 					$mail->Send();
 					echo "Message Sent OK";
-				} catch (phpmailerException $e) {
-					echo $e->errorMessage(); //Errori da PHPMailer
 				} catch (Exception $e) {
+					echo $e->errorMessage(); //Errori da PHPMailer
+				} catch (GlobalException $e) {
 					echo $e->getMessage(); //Errori da altrove
 				}
 			}
