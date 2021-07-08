@@ -40,13 +40,13 @@
             <div class="form-row">
               <div class="col-md-6">
                 <div class="form-label-group">
-                  <input type="password" name="password" id="inputPassword" class="form-control" placeholder="Password" required="required">
+                  <input type="password" name="password" id="inputPassword" class="form-control" placeholder="Password" required="required" autocomplete="off">
                   <label for="inputPassword">Password</label>
                 </div>
               </div>
               <div class="col-md-6">
                 <div class="form-label-group">
-                  <input type="password" id="confirmPassword" class="form-control" placeholder="Confirm password" required="required">
+                  <input type="password" id="confirmPassword" class="form-control" placeholder="Confirm password" required="required" autocomplete="off">
                   <label for="confirmPassword">Conferma la password</label>
                 </div>
               </div>
