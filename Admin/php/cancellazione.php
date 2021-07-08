@@ -1,8 +1,8 @@
 <?php
 
-$conn = mysql_connect ("localhost", "root", "") or die ("Connessione non riuscita"); 
+$conn = mysqli_connect ("localhost", "root", "") or die ("Connessione non riuscita"); 
 
-mysql_select_db ("civicsense") or die ("DataBase non trovato"); 
+mysqli_select_db ($conn, "civicsense") or die ("DataBase non trovato"); 
 
 
 $id = (isset($_POST['id'])) ? $_POST['id'] : null;
@@ -20,6 +20,3 @@ if ($id && $stato !== null) {
 		echo("<br><b><br><p> <center> <font color=black font face='Courier'> Inserimento avvenuto correttamente! Ricarica la pagina per aggiornare la tabella.</b></center></p><br><br> ");
 	} 
 }
-
-?>
-	

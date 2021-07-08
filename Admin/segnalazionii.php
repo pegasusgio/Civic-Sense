@@ -1,154 +1,156 @@
 <!DOCTYPE html>
 <html lang="en">
 
-  <head>
+<head>
 
-    <meta charset="utf-8">
-    <meta http-equiv="X-UA-Compatible" content="IE=edge">
-    <meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no">
-    <meta name="description" content="">
-    <meta name="author" content="">
+  <meta charset="utf-8">
+  <meta http-equiv="X-UA-Compatible" content="IE=edge">
+  <meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no">
+  <meta name="description" content="">
+  <meta name="author" content="">
 
-    <title>SB Admin - Tables</title>
+  <title>SB Admin - Tables</title>
 
-    <!-- Bootstrap core CSS-->
-    <link href="vendor/bootstrap/css/bootstrap.min.css" rel="stylesheet">
+  <!-- Bootstrap core CSS-->
+  <link href="vendor/bootstrap/css/bootstrap.min.css" rel="stylesheet">
 
-    <!-- Custom fonts for this template-->
-    <link href="vendor/fontawesome-free/css/all.min.css" rel="stylesheet" type="text/css">
+  <!-- Custom fonts for this template-->
+  <link href="vendor/fontawesome-free/css/all.min.css" rel="stylesheet" type="text/css">
 
-    <!-- Page level plugin CSS-->
-    <link href="vendor/datatables/dataTables.bootstrap4.css" rel="stylesheet">
+  <!-- Page level plugin CSS-->
+  <link href="vendor/datatables/dataTables.bootstrap4.css" rel="stylesheet">
 
-    <!-- Custom styles for this template-->
-    <link href="css/sb-admin.css" rel="stylesheet">
+  <!-- Custom styles for this template-->
+  <link href="css/sb-admin.css" rel="stylesheet">
 
-	<!-- Grafico -->
-	<link rel="stylesheet" href="css/graficostyle.css">
-	   
-  </head>
+  <!-- Grafico -->
+  <link rel="stylesheet" href="css/graficostyle.css">
+
+</head>
 
 <body id="page-top">
 
-<nav class="navbar navbar-expand navbar-dark bg-dark static-top">
+  <nav class="navbar navbar-expand navbar-dark bg-dark static-top">
 
-      <a class="navbar-brand mr-1" href=""> Area riservata</a>
-      <button class="btn btn-link btn-sm text-white order-1 order-sm-0" id="sidebarToggle" href="#">
-        <i class="fas fa-bars"></i>
-      </button>
+    <a class="navbar-brand mr-1" href=""> Area riservata</a>
+    <button class="btn btn-link btn-sm text-white order-1 order-sm-0" id="sidebarToggle" href="#">
+      <i class="fas fa-bars"></i>
+    </button>
 
 
-<!-- INIZIO LOGOUT -->     
+    <!-- INIZIO LOGOUT -->
 
- <form class="d-none d-md-inline-block form-inline ml-auto mr-0 mr-md-3 my-2 my-md-0">
-    <ul class="navbar-nav ml-auto ml-md-0">
-        <li class="nav-item dropdown no-arrow" >
-           <a class="nav-link dropdown-toggle" href="#" title="Logout"  id="userDropdown" role="button" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
-             <i class="fas fa-user-circle fa-fw"></i>
-           </a>
+    <form class="d-none d-md-inline-block form-inline ml-auto mr-0 mr-md-3 my-2 my-md-0">
+      <ul class="navbar-nav ml-auto ml-md-0">
+        <li class="nav-item dropdown no-arrow">
+          <a class="nav-link dropdown-toggle" href="#" title="Logout" id="userDropdown" role="button" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
+            <i class="fas fa-user-circle fa-fw"></i>
+          </a>
           <div class="dropdown-menu dropdown-menu-right" aria-labelledby="userDropdown">
-            <a class="dropdown-item" href="login.html" data-toggle="modal" data-target="#logoutModal" > Logout </a>
+            <a class="dropdown-item" href="login.html" data-toggle="modal" data-target="#logoutModal"> Logout </a>
           </div>
         </li>
-    </ul>
- </form>
- 
-</nav>
+      </ul>
+    </form>
 
-<!-- finestra avviso logout-->
+  </nav>
 
-    <div class="modal fade" id="logoutModal" tabindex="-1" role="dialog" aria-labelledby="exampleModalLabel" aria-hidden="true">
-      <div class="modal-dialog" role="document">
-        <div class="modal-content">
-          <div class="modal-header">
-            <h5 class="modal-title" id="exampleModalLabel">Sei sicuro di voler lasciare il sito?</h5>
-            <button class="close" type="button" data-dismiss="modal" aria-label="Close">
-              <span aria-hidden="true">×</span>
-            </button>
-          </div>
-          <div class="modal-body">Clicca "Logout" per uscire dal sito.</div>
-          <div class="modal-footer">
-            <button class="btn btn-secondary" type="button" data-dismiss="modal">Annulla</button>
-            <a class="btn btn-primary" href="login.php">Logout</a>
-          </div>
+  <!-- finestra avviso logout-->
+
+  <div class="modal fade" id="logoutModal" tabindex="-1" role="dialog" aria-labelledby="exampleModalLabel" aria-hidden="true">
+    <div class="modal-dialog" role="document">
+      <div class="modal-content">
+        <div class="modal-header">
+          <h5 class="modal-title" id="exampleModalLabel">Sei sicuro di voler lasciare il sito?</h5>
+          <button class="close" type="button" data-dismiss="modal" aria-label="Close">
+            <span aria-hidden="true">×</span>
+          </button>
+        </div>
+        <div class="modal-body">Clicca "Logout" per uscire dal sito.</div>
+        <div class="modal-footer">
+          <button class="btn btn-secondary" type="button" data-dismiss="modal">Annulla</button>
+          <a class="btn btn-primary" href="login.php">Logout</a>
         </div>
       </div>
     </div>
+  </div>
 
-<!-- FINE LOGOUT-->
+  <!-- FINE LOGOUT-->
 
 
-<div id="wrapper">
+  <div id="wrapper">
 
-   <!-- INIZIO SIDEBAR -->
+    <!-- INIZIO SIDEBAR -->
 
-<ul class="sidebar navbar-nav">
-    <br>
-        <li class="nav-item dropdown">
-          <a class="nav-link" href="index.php">
-            <i class="fas fa-fw fa-tachometer-alt"></i>
-            <span>Home</span>
+    <ul class="sidebar navbar-nav">
+      <br>
+      <li class="nav-item dropdown">
+        <a class="nav-link" href="index.php">
+          <i class="fas fa-fw fa-tachometer-alt"></i>
+          <span>Home</span>
+        </a>
+      </li>
+
+
+      <li class="nav-item active">
+        <a class="nav-link dropdown-toggle" id="pagesDropdown" role="button" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
+          <i class="fas fa-fw fa-folder"></i>
+          <span>Segnalazioni</span>
+        </a>
+        <div class="dropdown-menu" aria-labelledby="pagesDropdown">
+          <a class="dropdown-item" href="segnalazionii.php">
+            <center><b>INDICE SEGNALAZIONI</b></center>
           </a>
-        </li>
+          <a class="dropdown-item" href="segnalazioniverde.php">Segnalazione su aree verdi</a>
+          <a class="dropdown-item" href="segnalazionirifiuti.php">Rifiuti e pulizia stradale</a>
+          <a class="dropdown-item" href="segnalazionistrade.php">Strade e marciapiedi</a>
+          <a class="dropdown-item" href="segnalazionisemafori.php">Segnaletica e semafori</a>
+          <a class="dropdown-item" href="segnalazioniilluminazione.php">Illuminazione pubblica</a>
+        </div>
+      </li>
+
+      <li class="nav-item dropdown">
+        <a class="nav-link " href="team.php">
+          <i class="fas fa-fw fa-folder"></i>
+          <span>Team</span>
+        </a>
+
+    </ul>
+
+    <!-- FINE SIDEBAR -->
 
 
-        <li class="nav-item active">
-          <a class="nav-link dropdown-toggle" id="pagesDropdown" role="button" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
-            <i class="fas fa-fw fa-folder"></i>
-           <span>Segnalazioni</span>
-          </a>
-          <div class="dropdown-menu" aria-labelledby="pagesDropdown" >
-		    <a class="dropdown-item" href="segnalazionii.php"><center><b>INDICE SEGNALAZIONI</b></center></a>
-            <a class="dropdown-item" href="segnalazioniverde.php">Segnalazione su aree verdi</a>
-            <a class="dropdown-item" href="segnalazionirifiuti.php">Rifiuti e pulizia stradale</a> 
-			<a class="dropdown-item" href="segnalazionistrade.php">Strade e marciapiedi</a>
-            <a class="dropdown-item" href="segnalazionisemafori.php">Segnaletica e semafori</a> 
-			<a class="dropdown-item" href="segnalazioniilluminazione.php">Illuminazione pubblica</a>  
-          </div>
-        </li>
-		
-  <li class="nav-item dropdown">
-          <a class="nav-link " href="team.php" >
-            <i class="fas fa-fw fa-folder"></i>
-           <span>Team</span>
-          </a>
+    <div class="card mb-3">
 
-</ul>
+      <br>
 
-<!-- FINE SIDEBAR -->
+      <div class="card-header">
+        <i class="fas fa-table"></i>
+        Statistiche di tutte segnalazioni annuali
+      </div>
 
+      <br>
 
-<div class="card mb-3">    
+      <!-- GRAFICO -->
 
-<br>
+      <script src="//www.amcharts.com/lib/3/amcharts.js"></script>
+      <script src="//www.amcharts.com/lib/3/serial.js"></script>
+      <script src="//www.amcharts.com/lib/3/themes/light.js"></script>
 
-<div class="card-header">
-         <i class="fas fa-table"></i>
-  Statistiche di tutte segnalazioni annuali
-</div>
+      <div id="chartdiv"></div>
+      <script src='https://code.jquery.com/jquery-1.11.2.min.js'></script>
 
-<br>
+      <?php include("php/grafico.php"); ?>
 
-<!-- GRAFICO -->
-
-<script src="//www.amcharts.com/lib/3/amcharts.js"></script>
-<script src="//www.amcharts.com/lib/3/serial.js"></script>
-<script src="//www.amcharts.com/lib/3/themes/light.js"></script>
-
-<div id="chartdiv"></div>
-  <script src='https://code.jquery.com/jquery-1.11.2.min.js'></script>
-
- <?php include ("php/grafico.php"); ?>
-
-<!-- FINE GRAFICO -->
+      <!-- FINE GRAFICO -->
 
 
 
-    <!-- Carte -->
+      <!-- Carte -->
 
-<div class="row" style="margin-left:2%; margin-top:10%; margin-bottom: -6px;">
+      <div class="row" style="margin-left:2%; margin-top:10%; margin-bottom: -6px;">
 
-        <div class="col-lg-4 col-sm-6 portfolio-item" >
+        <div class="col-lg-4 col-sm-6 portfolio-item">
           <div class="card h-100" style="border:groove; border-color: black; ">
             <a><img class="card-img-top" src="img/verde.jpg" alt=""></a>
             <div class="card-body">
@@ -159,8 +161,8 @@
           </div>
         </div>
 
-    
-   
+
+
 
         <div class="col-lg-4 col-sm-6 portfolio-item">
           <div class="card h-100" style="border:groove; border-color: black; ">
@@ -174,7 +176,7 @@
         </div>
 
 
-	
+
 
 
         <div class="col-lg-4 col-sm-6 portfolio-item">
@@ -188,8 +190,8 @@
           </div>
         </div>
 
-	
-	
+
+
 
         <div class="col-lg-4 col-sm-6 portfolio-item">
           <div class="card h-100" style="border:groove; border-color: black; margin-top:4%; ">
@@ -202,8 +204,8 @@
           </div>
         </div>
 
-	
-	
+
+
 
 
         <div class="col-lg-4 col-sm-6 portfolio-item">
@@ -217,13 +219,13 @@
           </div>
         </div>
 
-	
-	
-	
-</div>
-    
 
-</div>
+
+
+      </div>
+
+
+    </div>
 
 
     <!-- Bootstrap core JavaScript-->
@@ -243,8 +245,8 @@
     <!-- Demo scripts for this page-->
     <script src="js/demo/datatables-demo.js"></script>
 
-	
 
-  </body>
+
+</body>
 
 </html>
