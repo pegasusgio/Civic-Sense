@@ -475,19 +475,6 @@ class SMTP
         return (bool) $crypto_ok;
     }
 
-    /**
-     * Perform SMTP authentication.
-     * Must be run after hello().
-     *
-     * @see    hello()
-     *
-     * @param string $username The user name
-     * @param string $password The password
-     * @param string $authtype The auth type (CRAM-MD5, PLAIN, LOGIN, XOAUTH2)
-     * @param OAuth  $OAuth    An optional OAuth instance for XOAUTH2 authentication
-     *
-     * @return bool True if successfully authenticated
-     */
     public function authenticate(
         $username,
         $password,
@@ -553,7 +540,6 @@ class SMTP
                 if (!$this->sendCommand('AUTH', 'AUTH PLAIN', 334)) {
                     return false;
                 }
-                //Send encoded username and password
                 if (
                     //Format from https://tools.ietf.org/html/rfc4616#section-2
                     //We skip the first field (it's forgery), so the string starts with a null byte

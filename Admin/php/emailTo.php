@@ -55,8 +55,8 @@ if (isset($_POST['id']) && isset($_POST['stato']) && isset($_POST['codice'])) {
 						$mail->Port       = 465;   				// inserisci la porta smtp per il server DOMINIO
 						$mail->SMTPKeepAlive = true;
 						$mail->Mailer = "smtp";
-						$mail->Username   = $row1['email'];     // DOMINIO username
-						$mail->Password   = openssl_decrypt($row1['password'], "AES-128-ECB", $var['SECRETKEY']);            // DOMINIO password
+						$mail->Username   = $row1['email'];
+						$mail->Password   = openssl_decrypt($row1['password'], "AES-128-ECB", $var['SECRETKEY']);
 						$mail->AddAddress($_SESSION['email']);
 						$mail->SetFrom($row1['email']);
 						$mail->Subject = 'Nuova Segnalazione';
@@ -85,8 +85,8 @@ if (isset($_POST['id']) && isset($_POST['stato']) && isset($_POST['codice'])) {
 					$mail->Port       = 465;   				// inserisci la porta smtp per il server DOMINIO
 					$mail->SMTPKeepAlive = true;
 					$mail->Mailer = "smtp";
-					$mail->Username   = $_SESSION['email'];  			// DOMINIO username
-					$mail->Password   = $_SESSION['pass'];            // DOMINIO password
+					$mail->Username   = $_SESSION['email'];
+					$mail->Password   = $_SESSION['pass'];
 					$mail->AddAddress($row['email_t']); //ente
 					$mail->AddAddress($row['email']); //utente
 					$mail->SetFrom($_SESSION['email']);

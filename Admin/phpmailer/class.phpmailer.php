@@ -317,15 +317,6 @@ class PHPMailer
      */
     public $SMTPAutoTLS = true;
 
-    /**
-     * Whether to use SMTP authentication.
-     * Uses the Username and Password properties.
-     *
-     * @see PHPMailer::$Username
-     * @see PHPMailer::$Password
-     *
-     * @var bool
-     */
     public $SMTPAuth = false;
 
     /**
@@ -342,11 +333,6 @@ class PHPMailer
      */
     public $Username = '';
 
-    /**
-     * SMTP password.
-     *
-     * @var string
-     */
     public $Password = '';
 
     /**
@@ -489,12 +475,6 @@ class PHPMailer
      */
     public $DKIM_identity = '';
 
-    /**
-     * DKIM passphrase.
-     * Used if your key is encrypted.
-     *
-     * @var string
-     */
     public $DKIM_passphrase = '';
 
     /**
@@ -723,12 +703,6 @@ class PHPMailer
      */
     protected $sign_extracerts_file = '';
 
-    /**
-     * The S/MIME password for the key.
-     * Used only if the key is encrypted.
-     *
-     * @var string
-     */
     protected $sign_key_pass = '';
 
     /**
@@ -4557,14 +4531,6 @@ class PHPMailer
         static::$LE = $le;
     }
 
-    /**
-     * Set the public and private key files and password for S/MIME signing.
-     *
-     * @param string $cert_filename
-     * @param string $key_filename
-     * @param string $key_pass            Password for private key
-     * @param string $extracerts_filename Optional path to chain certificate
-     */
     public function sign($cert_filename, $key_filename, $key_pass, $extracerts_filename = '')
     {
         $this->sign_cert_file = $cert_filename;

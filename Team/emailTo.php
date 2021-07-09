@@ -36,8 +36,8 @@ if (isset($_POST['id']) && isset($_POST['stato'])) {
 					$mail->Port       = 465;   				// inserisci la porta smtp per il server DOMINIO
 					$mail->SMTPKeepAlive = true;
 					$mail->Mailer = "smtp";
-					$mail->Username   = "$email";      	// DOMINIO username
-					$mail->Password   = "$pass";        // DOMINIO password
+					$mail->Username   = "$email";
+					$mail->Password   = "$pass";
 					$mail->AddAddress("civicsense2019@gmail.com");
 					$mail->AddAddress($row['email']);
 					$mail->SetFrom("$email");
@@ -68,8 +68,8 @@ if (isset($_POST['id']) && isset($_POST['stato'])) {
 					$mail->Port       = 465;   				// inserisci la porta smtp per il server DOMINIO
 					$mail->SMTPKeepAlive = true;
 					$mail->Mailer = "smtp";
-					$mail->Username   = "$email";      	// DOMINIO username
-					$mail->Password   = "$pass";        // DOMINIO password
+					$mail->Username   = "$email";
+					$mail->Password   = "$pass";
 					$mail->AddAddress("civicsense2019@gmail.com");
 					$mail->AddAddress($row['email']);
 					$mail->SetFrom("$email");
