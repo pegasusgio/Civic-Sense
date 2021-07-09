@@ -160,6 +160,7 @@
           <div id="map"></div>
 
           <?php
+          $locations = array();
           $conn = mysqli_connect("localhost", "root", "", "civicsense") or die("Connessione fallita");
           $sql = "SELECT * FROM segnalazioni where tipo = '5' ";
           $result = mysqli_query($conn, $sql);
@@ -168,7 +169,8 @@
               $id = filter_var($row['id'], FILTER_SANITIZE_NUMBER_INT);
               $longitudine = filter_var($row['longitudine'], FILTER_SANITIZE_STRING);
               $latitudine = filter_var($row['latitudine'], FILTER_SANITIZE_STRING);
-              $locations[] = array('id' => $id, 'lat' => $latitudine, 'lon' => $longitudine);
+              $descrizione = filter_var($row['descrizione'], FILTER_SANITIZE_STRING);
+              $locations[] = array('id' => $id, 'lat' => $latitudine, 'lon' => $longitudine, 'descrizione' => $descrizione);
             }
             /* Convert data to json */
             $markers = json_encode($locations);
@@ -181,6 +183,7 @@
             ?>
 
             function initMap() {
+
               var latlng = new google.maps.LatLng(41.003656, 16.870685);
               var myOptions = {
                 zoom: 8,
@@ -198,16 +201,27 @@
                 lat = parseFloat(markers[o].lat);
                 lon = parseFloat(markers[o].lon);
                 id = parseInt(markers[o].id);
+                descrizione = markers[o].descrizione;
 
+                to_display = '<b>Descrizione della segnalazione: </b>' + descrizione + '<br>' +
+                  '<b>Latitudine: </b>' + lat + '<br>' +
+                  '<b>Longitudine: </b>' + lon + '<br>';
+
+                infowindow = new google.maps.InfoWindow({
+                  content: to_display,
+                })
                 marker = new google.maps.Marker({
                   position: new google.maps.LatLng(lat, lon),
                   id: id,
                   map: map
                 });
-                google.maps.event.addListener(marker, 'click', function(e) {
-                  infowindow.setContent(this.name);
-                  infowindow.open(map, this);
-                }.bind(marker));
+                marker.addListener("click", () => {
+                  infowindow.open({
+                    anchor: marker,
+                    map,
+                    shouldFocus: false,
+                  });
+                });
               }
             }
           </script>
