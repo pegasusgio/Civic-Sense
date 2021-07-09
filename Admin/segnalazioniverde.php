@@ -159,43 +159,84 @@
 
           <div id="map"></div>
 
-          <script>
-            function initMap() {
-              var location = new google.maps.LatLng(40.382003, 17.367155);
-              var map = new google.maps.Map(document.getElementById("map"), {
-                zoom: 18,
-                center: location
-              });
-              <?php
-              $conn = mysqli_connect("localhost", "root", "", "civicsense") or die("Connessione fallita");
-              $sql = "SELECT * FROM segnalazioni where tipo = '1' ";
-              $result = mysqli_query($conn, $sql);
-              if ($result) {
-                while ($row = mysqli_fetch_assoc($result)) {
-                  echo "
-            var location = new google.maps.LatLng(" . filter_var($row['latitudine'], FILTER_SANITIZE_NUMBER_FLOAT) . "," . filter_var($row['longitudine'], FILTER_SANITIZE_NUMBER_FLOAT) . ");
-            var marker = new google.maps.Marker({
-              map: map,
-              position: location
 
-            }); ";
-                }
-                mysqli_close($conn);
-              }
-              ?>
-              /*var marker = new google.maps.Marker({
-                      map: map,
-                      position: location
-                  });
-              var marker1 = new google.maps.Marker({
-                map: map,
-                position: location1
-              });*/
 
+
+          <?php
+          $locations = array();
+          $conn = mysqli_connect("localhost", "root", "", "civicsense") or die("Connessione fallita");
+          $sql = "SELECT * FROM segnalazioni where tipo = '1' ";
+          $result = mysqli_query($conn, $sql);
+          if ($result) {
+            while ($row = mysqli_fetch_assoc($result)) {
+              $id = $row['id'];
+              $longitudine = $row['longitudine'];
+              $latitudine = $row['latitudine'];
+              $locations[] = array('id' => $id, 'lat' => $latitudine, 'lon' => $longitudine);
             }
+            /* Convert data to json */
+            $markers = json_encode($locations);
+            mysqli_close($conn);
+          }
+          ?>
+
+          <script type='text/javascript'>
+            <?php
+            echo "var markers=$markers;\n";
+            ?>
+
+            function initMap() {
+
+              var latlng = new google.maps.LatLng(-33.92, 151.25);
+              var myOptions = {
+                zoom: 10,
+                center: latlng,
+                mapTypeId: google.maps.MapTypeId.ROADMAP,
+                mapTypeControl: false
+              };
+
+              var map = new google.maps.Map(document.getElementById("map"), myOptions);
+              var infowindow = new google.maps.InfoWindow(),
+                marker, lat, lon;
+              var json = JSON.parse(markers);
+
+              console.log(json);
+
+              for (var o in json) {
+
+                lat = json[o].lat;
+                lon = json[o].lon;
+                id = json[o].id;
+
+                marker = new google.maps.Marker({
+                  position: new google.maps.LatLng(lat, lon),
+                  id: id,
+                  map: map
+                });
+                google.maps.event.addListener(marker, 'click', function(e) {
+                  infowindow.setContent(this.name);
+                  infowindow.open(map, this);
+                }.bind(marker));
+              }
+            }
+            /*
+            function initMap() {
+              const uluru = {
+                lat: -25.344,
+                lng: 131.036
+              };
+              const map = new google.maps.Map(document.getElementById("map"), {
+                zoom: 4,
+                center: uluru,
+              });
+              const marker = new google.maps.Marker({
+                position: uluru,
+                map: map,
+              });
+            }*/
           </script>
 
-          <script async defer src="https://maps.googleapis.com/maps/api/js?key=AIzaSyB7GIu4drL85xcaTdq8hAtRzVWjbKxs3NQ&callback=initMap">
+          <script async src="https://maps.googleapis.com/maps/api/js?key=AIzaSyDqWwEj5v1fUTcMI7C-xG2dt-jYs7pRnTk&callback=initMap">
           </script>
 
 
