@@ -187,9 +187,9 @@
 
             function initMap() {
 
-              var latlng = new google.maps.LatLng(-33.92, 151.25);
+              var latlng = new google.maps.LatLng(41.003656, 16.870685);
               var myOptions = {
-                zoom: 10,
+                zoom: 8,
                 center: latlng,
                 mapTypeId: google.maps.MapTypeId.ROADMAP,
                 mapTypeControl: false
@@ -198,15 +198,12 @@
               var map = new google.maps.Map(document.getElementById("map"), myOptions);
               var infowindow = new google.maps.InfoWindow(),
                 marker, lat, lon;
-              var json = JSON.parse(markers);
 
-              console.log(json);
+              for (var o in markers) {
 
-              for (var o in json) {
-
-                lat = json[o].lat;
-                lon = json[o].lon;
-                id = json[o].id;
+                lat = parseFloat(markers[o].lat);
+                lon = parseFloat(markers[o].lon);
+                id = parseInt(markers[o].id);
 
                 marker = new google.maps.Marker({
                   position: new google.maps.LatLng(lat, lon),
