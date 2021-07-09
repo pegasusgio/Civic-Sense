@@ -159,9 +159,6 @@
 
           <div id="map"></div>
 
-
-
-
           <?php
           $locations = array();
           $conn = mysqli_connect("localhost", "root", "", "civicsense") or die("Connessione fallita");
@@ -169,9 +166,9 @@
           $result = mysqli_query($conn, $sql);
           if ($result) {
             while ($row = mysqli_fetch_assoc($result)) {
-              $id = $row['id'];
-              $longitudine = $row['longitudine'];
-              $latitudine = $row['latitudine'];
+              $id = filter_var($row['id'], FILTER_SANITIZE_NUMBER_INT);
+              $longitudine = filter_var($row['longitudine'], FILTER_SANITIZE_STRING);
+              $latitudine = filter_var($row['latitudine'], FILTER_SANITIZE_STRING);
               $locations[] = array('id' => $id, 'lat' => $latitudine, 'lon' => $longitudine);
             }
             /* Convert data to json */
@@ -179,7 +176,6 @@
             mysqli_close($conn);
           }
           ?>
-
           <script type='text/javascript'>
             <?php
             echo "var markers=$markers;\n";
@@ -216,29 +212,12 @@
                 }.bind(marker));
               }
             }
-            /*
-            function initMap() {
-              const uluru = {
-                lat: -25.344,
-                lng: 131.036
-              };
-              const map = new google.maps.Map(document.getElementById("map"), {
-                zoom: 4,
-                center: uluru,
-              });
-              const marker = new google.maps.Marker({
-                position: uluru,
-                map: map,
-              });
-            }*/
           </script>
 
           <script async src="https://maps.googleapis.com/maps/api/js?key=AIzaSyDqWwEj5v1fUTcMI7C-xG2dt-jYs7pRnTk&callback=initMap">
           </script>
 
-
           <!-- FINE MAPPA -->
-
 
           <br><br><br>
           <!-- Tabella -->

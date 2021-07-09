@@ -158,47 +158,64 @@
 
           <div id="map"></div>
 
-          <script>
-            function initMap() {
-              var location = new google.maps.LatLng(40.382003, 17.367155);
-              var map = new google.maps.Map(document.getElementById("map"), {
-                zoom: 18,
-                center: location
-              });
-              <?php
-              $conn = mysqli_connect("localhost", "root", "", "civicsense") or die("Connessione fallita");
-              $sql = "SELECT * FROM segnalazioni where tipo = '4' ";
-              $result = mysqli_query($conn, $sql);
-              if ($result) {
-                while ($row = mysqli_fetch_assoc($result)) {
-                  echo "
-            var location = new google.maps.LatLng(" . filter_var($row['latitudine'], FILTER_SANITIZE_NUMBER_FLOAT) . "," . filter_var($row['longitudine'], FILTER_SANITIZE_NUMBER_FLOAT) . ");
-            var marker = new google.maps.Marker({
-              map: map,
-              position: location
-           
-            }); ";
-                }
-                mysqli_close($conn);
-              }
-              ?>
-              /*var marker = new google.maps.Marker({
-                      map: map,
-                      position: location
-                  });
-              var marker1 = new google.maps.Marker({
-                map: map,
-                position: location1
-              });*/
+          <?php
+          $conn = mysqli_connect("localhost", "root", "", "civicsense") or die("Connessione fallita");
+          $sql = "SELECT * FROM segnalazioni where tipo = '4' ";
+          $result = mysqli_query($conn, $sql);
+          if ($result) {
+            while ($row = mysqli_fetch_assoc($result)) {
+              $id = filter_var($row['id'], FILTER_SANITIZE_NUMBER_INT);
+              $longitudine = filter_var($row['longitudine'], FILTER_SANITIZE_STRING);
+              $latitudine = filter_var($row['latitudine'], FILTER_SANITIZE_STRING);
+              $locations[] = array('id' => $id, 'lat' => $latitudine, 'lon' => $longitudine);
+            }
+            /* Convert data to json */
+            $markers = json_encode($locations);
+            mysqli_close($conn);
+          }
+          ?>
+          <script type='text/javascript'>
+            <?php
+            echo "var markers=$markers;\n";
+            ?>
 
+            function initMap() {
+              var latlng = new google.maps.LatLng(41.003656, 16.870685);
+              var myOptions = {
+                zoom: 8,
+                center: latlng,
+                mapTypeId: google.maps.MapTypeId.ROADMAP,
+                mapTypeControl: false
+              };
+
+              var map = new google.maps.Map(document.getElementById("map"), myOptions);
+              var infowindow = new google.maps.InfoWindow(),
+                marker, lat, lon;
+
+              for (var o in markers) {
+
+                lat = parseFloat(markers[o].lat);
+                lon = parseFloat(markers[o].lon);
+                id = parseInt(markers[o].id);
+
+                marker = new google.maps.Marker({
+                  position: new google.maps.LatLng(lat, lon),
+                  id: id,
+                  map: map
+                });
+                google.maps.event.addListener(marker, 'click', function(e) {
+                  infowindow.setContent(this.name);
+                  infowindow.open(map, this);
+                }.bind(marker));
+              }
             }
           </script>
 
-          <script async defer src="https://maps.googleapis.com/maps/api/js?key=AIzaSyB7GIu4drL85xcaTdq8hAtRzVWjbKxs3NQ&callback=initMap">
+          <script async src="https://maps.googleapis.com/maps/api/js?key=AIzaSyDqWwEj5v1fUTcMI7C-xG2dt-jYs7pRnTk&callback=initMap">
           </script>
 
-
           <!-- FINE MAPPA -->
+
           <br><br><br>
           <!-- Tabella -->
           <div class="table-responsive" style="overflow-x: scroll;">
