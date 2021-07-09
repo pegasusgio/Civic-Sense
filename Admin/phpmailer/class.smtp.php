@@ -273,7 +273,9 @@ class SMTP
         switch ($this->Debugoutput) {
             case 'error_log':
                 //Don't output, just log
-                error_log($str);
+                $badchars = array("\n", "\r", "\t");
+                $safedata = str_replace($badchars, "", $str);
+                error_log($safedata);
                 break;
             case 'html':
                 //Cleans up output a bit for a better looking, HTML-safe output
