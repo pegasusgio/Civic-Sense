@@ -37,7 +37,7 @@
           </div>
           <div class="form-group">
             <div class="form-label-group">
-              <input type="password" id="inputPassword" name="password" class="form-control" placeholder="Password" required="required">
+              <input type="password" id="inputPassword" name="password" class="form-control" placeholder="Password" required="required" autocomplete="off">
               <label for="inputPassword"> Password </label>
             </div>
           </div>
