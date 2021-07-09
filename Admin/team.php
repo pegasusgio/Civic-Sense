@@ -129,7 +129,7 @@
     <!-- FINE SIDEBAR -->
 
 
-    <div class="card mb-3">
+    <div class="card mb-3" style="width: 100%;">
       <div class="card-header">
         <i class="fas fa-table"></i>
         Tabella team
@@ -191,7 +191,7 @@
               Assegna una segnalazione ad un team
             </div>
 
-            <form method="post" action="team.php" style=" margin-top:5%; margin-left:5%">
+            <form method="post" action="team.php" style=" margin-top:5%; margin-left:5%;">
               <b>CODICE SEGNALAZIONE: <input type="text" name="id"><br><br></b>
               <b>SELEZIONA L'EMAIL DEL TEAM: </b> <select class="text" name="team">
 
@@ -292,9 +292,9 @@
                 #inserisco i valori salvati dal form nella query di inserimento
 
                 $query = "INSERT INTO team
-			(email_t, npersone, nomi, password)
-			VALUES
-			('$email','$numeri', '$nomi','$pass')";
+			          (email_t, npersone, nomi, password)
+			          VALUES
+			          ('$email','$numeri', '$nomi','$pass')";
                 $stmt = $conn->prepare($query);
                 $stmt->bind_param('ssss', $email, $numeri, $nomi, $pass);
                 $result = $stmt->execute();
