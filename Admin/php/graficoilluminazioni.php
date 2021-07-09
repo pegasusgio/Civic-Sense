@@ -246,7 +246,7 @@ Where month(datainv) = 09  AND tipo = '5' ");
                     echo   "
 	
 		       
-			  " . filter_var($row['cont'], FILTER_SANITIZE_NUMBER_INT . "  
+			  " . filter_var($row['cont'], FILTER_SANITIZE_NUMBER_INT) . "  
 
 	";
                   }
