@@ -112,7 +112,7 @@
           </a>
           <a class="dropdown-item" href="segnalazioniverde.php">Segnalazione su aree verdi</a>
           <a class="dropdown-item" href="segnalazionirifiuti.php">Rifiuti e pulizia stradale</a>
-          <a class="dropdown-item" href="segnalazionistrade.php" style=" background-color:orange;"> <b>Strade e marciapiedi</a>
+          <a class="dropdown-item" href="segnalazionistrade.php" style=" background-color:orange;"> <b>Strade e marciapiedi</b></a>
           <a class="dropdown-item" href="segnalazionisemafori.php">Segnaletica e semafori</a>
           <a class="dropdown-item" href="segnalazioniilluminazione.php">Illuminazione pubblica</a>
         </div>

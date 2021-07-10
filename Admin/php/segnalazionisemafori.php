@@ -1,16 +1,11 @@
 ﻿<?php
-$conn = mysqli_connect("localhost", "root", "") or die("Connessione non riuscita");
+$conn = mysqli_connect("localhost", "root", "", "civicsense") or die("Connessione non riuscita");
 
 mysqli_select_db($conn, "civicsense") or die("DataBase non trovato"); #connessione al db
 
+$query = mysqli_query($conn, "SELECT * FROM segnalazioni WHERE tipo = '4' ");
 
-$upload_path = 'img/';
-$quer = mysqli_query($conn, "SELECT * FROM segnalazioni WHERE tipo = '4' ");
-
-
-
-
-while ($row = mysqli_fetch_assoc($quer)) {
+while ($row = mysqli_fetch_assoc($query)) {
   echo "
     <tr>
      
@@ -24,7 +19,7 @@ while ($row = mysqli_fetch_assoc($quer)) {
 
                 <td>" . filter_var($row['descrizione'], FILTER_SANITIZE_STRING) . "<br></td>
 
-                 <td><img width='200px' height='200px' src=" . $upload_path . filter_var($row['foto'], FILTER_SANITIZE_STRING) . "><br></td>
+                 <td><img width='200' height='200' src=data:image/jpeg;base64," . base64_encode($row['foto']) . "><br></td>
 
                   <td>" . filter_var($row['email'], FILTER_SANITIZE_EMAIL) . "<br></td>
 
