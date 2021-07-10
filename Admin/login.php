@@ -71,12 +71,15 @@
   if (isset($_POST['email']) && isset($_POST['password'])) {
     $email = $_POST['email'];
     $password = $_POST['password'];
+
     $conn = mysqli_connect('localhost', 'root', '') or die("Connessione non riuscita");
     mysqli_select_db($conn, 'civicsense') or die("Database non trovato"); #connessione al db
 
-    $query = "SELECT * FROM admin where email = ?";
+    $var = parse_ini_file("config.ini");
+
+    $query = "SELECT * FROM admin where email = ? AND password = ?";
     $stmt = $conn->prepare($query);
-    $stmt->bind_param('s', $email);
+    $stmt->bind_param('ss', $email, openssl_decrypt($password, "AES-128-ECB", $var['SECRETKEY']));
     $result_query = $stmt->execute();
 
     if ($result_query) {
@@ -84,44 +87,38 @@
       $row = $result->fetch_assoc();
 
       if (mysqli_num_rows($result) > 0) {
-        $var = parse_ini_file("config.ini");
 
-        if ($password == openssl_decrypt($row['password'], "AES-128-ECB", $var['SECRETKEY'])) {
-          echo 'Accesso consentito alla sezione riservata';
-          $_SESSION['email'] = $email;
-          $_SESSION['password'] = $password;
-          echo '<script>window.location.href = "index.php";</script>';
-        } else {
-          echo 'Accesso negato alla sezione riservata. La password è errata!';
-        }
+        echo 'Accesso consentito alla sezione riservata';
+        $_SESSION['email'] = $email;
+        $_SESSION['password'] = $password;
+        $_SESSION['id'] = $row['id'];
+        echo '<script>window.location.href = "index.php";</script>';
       } else {
-        echo "Non esiste un account admin con queste credenziali.";
-        // Connessione Database
-        $query = "SELECT * FROM team where email_t = ?";
-        $stmt = $conn->prepare($query);
-        $stmt->bind_param('s', $email);
-        $result_query = $stmt->execute();
 
-        if ($result_query) {
-          $result = $stmt->get_result();
-          if (mysqli_num_rows($result) > 0) {
-            while ($row = mysqli_fetch_assoc($result)) {
-              if (($password != openssl_decrypt($row['password'], "AES-128-ECB", $var['SECRETKEY'])) || $email != $row["email_t"]) {
-                //CODICE JAVASCRIPT
-                echo "ATTENZIONE: La password o l'email inserita non è corretta!";
-              } else if (($password == openssl_decrypt($row['password'], "AES-128-ECB", $var['SECRETKEY'])) && $email == $row["email_t"]) {
-                $_SESSION['email'] = $email;
-                $_SESSION['pass'] = $password;
-                $_SESSION['idT'] = $row['codice'];
-                echo 'Accesso consentito area riservata (TEAM)';
-                header("location: http://localhost//Civic-Sense/Team/index.php");
-              }
-            }
+        echo "Accesso negato alla sezione riservata. L'email o la password sono errate!";
+
+        $query1 = "SELECT * FROM team where email_t = ? and password = ?";
+        $stmt1 = $conn->prepare($query1);
+        $stmt1->bind_param('ss', $email, openssl_decrypt($password, "AES-128-ECB", $var['SECRETKEY']));
+        $result_query1 = $stmt1->execute();
+
+        if ($result_query1) {
+          $result1 = $stmt1->get_result();
+          $row1 = $result1->fetch_assoc();
+
+          if (mysqli_num_rows($result1) > 0) {
+            $_SESSION['email'] = $email;
+            $_SESSION['pass'] = $password;
+            $_SESSION['idT'] = $row['codice'];
+            echo 'Accesso consentito area riservata (TEAM)';
+            header("location: http://localhost//Civic-Sense/Team/index.php");
+          } else {
+            echo "ATTENZIONE: La password o l'email inserita non sono corrette!";
           }
         }
       }
     }
-    mysqli_close($conn);
   }
+  mysqli_close($conn);
 
   ?>
