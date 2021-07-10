@@ -24,7 +24,7 @@ while ($row = mysqli_fetch_assoc($quer)) {
 
                 <td>" . filter_var($row['descrizione'], FILTER_SANITIZE_STRING) . "<br></td>
 
-                 <td><img width='200px' height='200px' src=" . $upload_path . filter_var($row['foto'], FILTER_SANITIZE_STRING) . "><br></td>
+                 <td> <img src='getImage.php?id=3' width='200px' height='200px' /> <br></td>
 
                   <td>" . filter_var($row['email'], FILTER_SANITIZE_EMAIL) . "<br></td>
 
