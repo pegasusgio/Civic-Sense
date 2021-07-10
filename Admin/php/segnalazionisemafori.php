@@ -19,7 +19,7 @@ while ($row = mysqli_fetch_assoc($query)) {
 
                 <td>" . filter_var($row['descrizione'], FILTER_SANITIZE_STRING) . "<br></td>
 
-                 <td><img width='200' height='200' src=data:image/jpeg;base64," . base64_encode($row['foto']) . "><br></td>
+                 <td><img width='200' height='200' src=data:image/jpeg;base64," . filter_var(base64_encode($row['foto']), FILTER_SANITIZE_STRING) . "><br></td>
 
                   <td>" . filter_var($row['email'], FILTER_SANITIZE_EMAIL) . "<br></td>
 
