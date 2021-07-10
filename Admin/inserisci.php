@@ -42,7 +42,7 @@
     <b> ORA INVIO: </b> <input type="time" name="ora"><br><br></b>
     <b> VIA (VIA NOMEVIA, N CIVICO, CAP, PROVINCIA (ES: PULSANO O TARANTO), TA, ITALIA: <input type="text" name="via"><br><br></b>
     <b> DESCRIZIONE: <input type="text" name="descr"><br><br></b>
-    <b> FOTO: <input type="file" name="foto"><br><br></b>
+    <b> FOTO: <input type="file" name="foto" accept="image/*"><br><br></b>
     <b> EMAIL (LA VOSTRA): <input type="email" name="email"><br><br></b>
     <b> LATITUDINE: <input type="text" name="lat"><br><br></b>
     <b> LONGITUDINE: <input type="text" name="long"><br><br></b>
@@ -73,11 +73,20 @@
   $long = (isset($_POST['long'])) ? $_POST['long'] : null;
   $tipo = (isset($_POST['tipo'])) ? $_POST['tipo'] : null;
 
+  $via_c = filter_var($via, FILTER_SANITIZE_STRING);
+  $descr_c = filter_var($descr, FILTER_SANITIZE_STRING);
+  $foto_c = filter_var($foto, FILTER_SANITIZE_STRING);
+  $email_c = filter_var($email, FILTER_SANITIZE_EMAIL);
+  $lat_c = filter_var($lat, FILTER_SANITIZE_STRING);
+  $long_c = filter_var($long, FILTER_SANITIZE_STRING);
+  $tipo_c = filter_var($tipo, FILTER_SANITIZE_STRING);
+
+
   $query = "INSERT INTO segnalazioni
             (datainv, orainv, via, descrizione, foto, email, tipo, latitudine, longitudine)
             VALUES (?,?,?,?,?,?,?,?,?) ";
-  $stmt = $conn->prepare($query);
-  $stmt->bind_param('sssssssss', $data, $ora, $via, $descr, $foto, $email, $tipo, $lat, $long);
+  $stmt = $conn->prepare($query) or die("Connessione non riuscita");
+  $stmt->bind_param('sssssssss', $data, $ora, $via_c, $descr_c, $foto_c, $email_c, $tipo_c, $lat_c, $long_c);
   $result = $stmt->execute();
 
   if ($result) {

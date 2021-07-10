@@ -7,7 +7,7 @@ if ($_SERVER['REQUEST_METHOD'] == 'POST') {
 
 	$filename = $_FILES['image']['name'];
 	$filetype = $_FILES['image']['type'];
-	$filetmp_name = $_FILES['image']['tmp_name'];
+	$filetmp_name = filter_var($_FILES['image']['tmp_name'], FILTER_SANITIZE_STRING);
 
 	//check if the type is image
 	if (str_contains($filetype, "image")) {
@@ -46,14 +46,17 @@ if ($_SERVER['REQUEST_METHOD'] == 'POST') {
 
 
 		try {
-			move_uploaded_file($filetmp_name, $file_path);
-			$query = "INSERT INTO `segnalazioni`(`datainv`, `orainv`, `via`, `descrizione`, `foto`, `email`,`tipo`,`latitudine`,`longitudine`) 
-		VALUES (CURRENT_DATE,CURRENT_TIME,'?','?','{?}','?','?','?','?')";
-			$stmt = $conn->prepare($query);
-			$stmt->bind_param('sssssss', $via, $descrizione, $filename, $email, $tipo, $lat, $lng);
-			$result = $stmt->execute();
-			if ($result) {
-				echo "Inserimento dei dati completato";
+			if (move_uploaded_file($filetmp_name, $file_path)) {
+				$query = "INSERT INTO `segnalazioni`(`datainv`, `orainv`, `via`, `descrizione`, `foto`, `email`,`tipo`,`latitudine`,`longitudine`) 
+						VALUES (CURRENT_DATE,CURRENT_TIME,'?','?','{?}','?','?','?','?')";
+				$stmt = $conn->prepare($query);
+				$stmt->bind_param('sssssss', $via, $descrizione, $filename, $email, $tipo, $lat, $lng);
+				$result = $stmt->execute();
+				if ($result) {
+					echo "Inserimento dei dati completato";
+				} else {
+					echo "Errore nell'inserimento dei dati";
+				}
 			} else {
 				echo "Errore nell'inserimento dei dati";
 			}
