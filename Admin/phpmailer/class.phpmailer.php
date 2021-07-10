@@ -883,10 +883,7 @@ class PHPMailer
         switch ($this->Debugoutput) {
             case 'error_log':
                 //Don't output, just log
-                /** @noinspection ForgottenDebugOutputInspection */
-                $badchars = array("\n", "\r", "\t");
-                $safedata = str_replace($badchars, "", $str);
-                error_log($safedata);
+                error_log(filter_var($str, FILTER_SANITIZE_STRING));
                 break;
             case 'html':
                 //Cleans up output a bit for a better looking, HTML-safe output

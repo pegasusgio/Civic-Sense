@@ -273,9 +273,7 @@ class SMTP
         switch ($this->Debugoutput) {
             case 'error_log':
                 //Don't output, just log
-                $badchars = array("\n", "\r", "\t");
-                $safedata = str_replace($badchars, "", $str);
-                error_log($safedata);
+                error_log(filter_var($str, FILTER_SANITIZE_STRING));
                 break;
             case 'html':
                 //Cleans up output a bit for a better looking, HTML-safe output
@@ -601,9 +599,7 @@ class SMTP
     }
 
     /**
-     * Calculate an MD5 HMAC hash.
-     * Works like hash_hmac('md5', $data, $key)
-     * in case that function is not available.
+     * Calculate an SHA-512 HMAC hash.
      *
      * @param string $data The data to hash
      * @param string $key  The key to hash with
@@ -612,29 +608,7 @@ class SMTP
      */
     protected function hmac($data, $key)
     {
-        if (function_exists('hash_hmac')) {
-            return hash_hmac('md5', $data, $key);
-        }
-
-        //The following borrowed from
-        //http://php.net/manual/en/function.mhash.php#27225
-
-        //RFC 2104 HMAC implementation for php.
-        //Creates an md5 HMAC.
-        //Eliminates the need to install mhash to compute a HMAC
-        //by Lance Rushing
-
-        $bytelen = 64; //byte length for md5
-        if (strlen($key) > $bytelen) {
-            $key = pack('H*', md5($key));
-        }
-        $key = str_pad($key, $bytelen, chr(0x00));
-        $ipad = str_pad('', $bytelen, chr(0x36));
-        $opad = str_pad('', $bytelen, chr(0x5c));
-        $k_ipad = $key ^ $ipad;
-        $k_opad = $key ^ $opad;
-
-        return md5($k_opad . pack('H*', md5($k_ipad . $data)));
+        return hash_hmac('sha512', $data, $key);
     }
 
     /**
