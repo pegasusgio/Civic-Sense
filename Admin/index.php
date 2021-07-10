@@ -111,7 +111,7 @@
           <a href="team.php">
 
             <div class="col-lg-4 col-sm-6 portfolio-item">
-              <div class="card h-100" style="   ">
+              <div class="card h-100">
                 <img class="card-img-top" src="img/team.jpg" alt="">
                 <div class="card-body">
                   <h4 class="mr-5" style="margin-top: -30px;">
@@ -125,7 +125,7 @@
           <a href="segnalazionii.php">
 
             <div class="col-lg-4 col-sm-6 portfolio-item">
-              <div class="card h-100" style="   ">
+              <div class="card h-100">
                 <img class="card-img-top" src="img/segnalazioni.jpg" alt="">
                 <div class="card-body">
                   <h4 class="mr-5" style="margin-top: -30px;"> <br>

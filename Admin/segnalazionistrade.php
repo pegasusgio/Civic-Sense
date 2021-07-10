@@ -131,8 +131,8 @@
 
     <div class="card mb-3">
       <div class="card-header">
-        <i class="fas fa-table"></i>
-        Tabella Segnalazioni
+        <i class="fas fa-map"></i>
+        Mappa Segnalazioni
       </div>
       <div class="card-body">
 
@@ -229,6 +229,12 @@
 
           <br><br><br>
           <!-- Tabella -->
+          <div class="card-header">
+            <i class="fas fa-table"></i>
+            Tabella Segnalazioni
+          </div>
+          <br>
+
           <div class="table-responsive" style="overflow-x: scroll;">
             <table class="table table-bordered" id="dataTable" width="100%" cellspacing="0">
               <thead>
@@ -262,7 +268,7 @@
             </div>
 
             <form method="post" action="segnalazionistrade.php" style=" margin-top:5%; margin-left:5%">
-              <b>CODICE CANCELLAZIONE DA MODIFICARE: <input type="text" name="idt"><br><br></b>
+              <b>CODICE SEGNALAZIONE DA MODIFICARE: <input type="text" name="idt"><br><br></b>
               <b> INSERISCI LA GRAVITA' MODIFICATA: </b> <select class="text" name="gravit">
 
                 <option value="Alta">Alta</option>

@@ -35,7 +35,7 @@
 
   <nav class="navbar navbar-expand navbar-dark bg-dark static-top">
 
-    <a class="navbar-brand mr-1" href="" style="  "> Area riservata</a>
+    <a class="navbar-brand mr-1" href=""> Area riservata</a>
 
     <button class="btn btn-link btn-sm text-white order-1 order-sm-0" id="sidebarToggle" href="#">
       <i class="fas fa-bars"></i>
@@ -95,7 +95,7 @@
 
     <!-- INIZIO SIDEBAR -->
 
-    <ul class="sidebar navbar-nav" style="  ">
+    <ul class="sidebar navbar-nav">
       <br>
       <li class="nav-item dropdown">
         <a class="nav-link" href="index.php">
@@ -133,10 +133,10 @@
 
 
 
-    <div class="card mb-3" style="">
+    <div class="card mb-3">
       <div class="card-header">
-        <i class="fas fa-table"></i>
-        Tabella Segnalazioni
+        <i class="fas fa-map"></i>
+        Mappa Segnalazioni
       </div>
       <div class="card-body">
 
@@ -233,6 +233,12 @@
 
           <br><br><br>
           <!-- Tabella -->
+          <div class="card-header">
+            <i class="fas fa-table"></i>
+            Tabella Segnalazioni
+          </div>
+          <br>
+
           <div class="table-responsive" style="overflow-x: scroll; ">
             <table class="table table-bordered" id="dataTable" width="100%" cellspacing="0" style="background-color:white;">
               <thead>
