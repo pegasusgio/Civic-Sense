@@ -193,8 +193,8 @@
               };
 
               var map = new google.maps.Map(document.getElementById("map"), myOptions);
-              var infowindow = new google.maps.InfoWindow(),
-                marker, lat, lon;
+
+              var infoWindow = new google.maps.InfoWindow();
 
               for (var o in markers) {
 
@@ -203,25 +203,20 @@
                 id = parseInt(markers[o].id);
                 descrizione = markers[o].descrizione;
 
-                to_display = '<b>Descrizione della segnalazione: </b>' + descrizione + '<br>' +
-                  '<b>Latitudine: </b>' + lat + '<br>' +
-                  '<b>Longitudine: </b>' + lon + '<br>';
-
-                infowindow = new google.maps.InfoWindow({
-                  content: to_display,
-                })
-                marker = new google.maps.Marker({
+                var marker = new google.maps.Marker({
                   position: new google.maps.LatLng(lat, lon),
                   id: id,
                   map: map
                 });
-                marker.addListener("click", () => {
-                  infowindow.open({
-                    anchor: marker,
-                    map,
-                    shouldFocus: false,
+                (function(marker, lat, lon, descrizione) {
+                  google.maps.event.addListener(marker, "click", function(e) {
+                    //Wrap the content inside an HTML DIV in order to set height and width of InfoWindow.
+                    infoWindow.setContent('<b>Descrizione della segnalazione: </b>' + descrizione + '<br>' +
+                      '<b>Latitudine: </b>' + lat + '<br>' +
+                      '<b>Longitudine: </b>' + lon + '<br>');
+                    infoWindow.open(map, marker);
                   });
-                });
+                })(marker, lat, lon, descrizione);
               }
             }
           </script>
@@ -332,7 +327,6 @@
             <script src="//www.amcharts.com/lib/3/themes/light.js"></script>
 
             <div id="chartdiv"></div>
-            <script src='https://code.jquery.com/jquery-1.11.2.min.js'></script>
 
             <?php include("php/graficoverde.php"); ?>
 
