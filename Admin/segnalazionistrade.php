@@ -8,7 +8,6 @@
   <meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no">
   <meta name="description" content="">
   <meta name="author" content="">
-  <meta name="csrf-token" content="{{ csrf_token() }}">
 
   <title>SB Admin - Tables</title>
 
@@ -262,24 +261,6 @@
               <i class="fas fa-table"></i>
               Modifica gravità di una segnalazione
             </div>
-
-            <script type="text/javascript">
-              var csrf_token = document.querySelector("meta[name='csrf-token']").getAttribute("content");
-
-              function csrfSafeMethod(method) {
-                // these HTTP methods do not require CSRF protection
-                return (/^(GET|HEAD|OPTIONS)$/.test(method));
-              }
-              var o = XMLHttpRequest.prototype.open;
-              XMLHttpRequest.prototype.open = function() {
-                var res = o.apply(this, arguments);
-                var err = new Error();
-                if (!csrfSafeMethod(arguments[0])) {
-                  this.setRequestHeader('anti-csrf-token', csrf_token);
-                }
-                return res;
-              };
-            </script>
 
             <form method="post" action="segnalazionistrade.php" style=" margin-top:5%; margin-left:5%">
               <b>CODICE SEGNALAZIONE DA MODIFICARE: <input type="text" name="idt"><br><br></b>
