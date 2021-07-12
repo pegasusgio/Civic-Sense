@@ -2648,7 +2648,10 @@ class PHPMailer
             try {
                 $bytes = random_bytes($len);
             } catch (\Exception $e) {
-                //Do nothing
+                $this->setError($e->getMessage());
+                if ($this->exceptions) {
+                    throw $e;
+                }
             }
         } elseif (function_exists('openssl_random_pseudo_bytes')) {
             /** @noinspection CryptographicallySecureRandomnessInspection */

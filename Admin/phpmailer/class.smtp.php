@@ -967,8 +967,8 @@ class SMTP
         //Fetch SMTP code and possible error code explanation
         $matches = [];
         if (preg_match('/^([\d]{3})[ -](?:([\d]\\.[\d]\\.[\d]{1,2}) )?/', $this->last_reply, $matches)) {
-            $code = (int) $matches[1];
-            $code_ex = (count($matches) > 2 ? $matches[2] : null);
+            $code = filter_var(((int) $matches[1]),FILTER_SANITIZE_NUMBER_INT);
+            $code_ex = filter_var((count($matches) > 2 ? $matches[2] : null), FILTER_SANITIZE_STRING);
             //Cut off error code from each response line
             $detail = preg_replace(
                 "/{$code}[ -]" .
