@@ -54,7 +54,6 @@
           <br>
           <center> <a class="d-block small mt-3" href="registrateam.php">Sei un nuovo team? Registra la tua password!</a> </center>
         </form>
-
       </div>
     </div>
   </div>
@@ -79,7 +78,8 @@
 
     $query = "SELECT * FROM admin where email = ? AND password = ?";
     $stmt = $conn->prepare($query);
-    $stmt->bind_param('ss', $email, openssl_decrypt($password, "AES-128-ECB", $var['SECRETKEY']));
+    $encrypted_password = openssl_encrypt($password, "AES-128-ECB", $var['SECRETKEY']);
+    $stmt->bind_param('ss', $email, $encrypted_password);
     $result_query = $stmt->execute();
 
     if ($result_query) {
@@ -95,11 +95,10 @@
         echo '<script>window.location.href = "index.php";</script>';
       } else {
 
-        echo "Accesso negato alla sezione riservata. L'email o la password sono errate!";
-
         $query1 = "SELECT * FROM team where email_t = ? and password = ?";
         $stmt1 = $conn->prepare($query1);
-        $stmt1->bind_param('ss', $email, openssl_decrypt($password, "AES-128-ECB", $var['SECRETKEY']));
+        $encrypted_password = openssl_encrypt($password, "AES-128-ECB", $var['SECRETKEY']);
+        $stmt1->bind_param('ss', $email, $encrypted_password);
         $result_query1 = $stmt1->execute();
 
         if ($result_query1) {
@@ -109,16 +108,13 @@
           if (mysqli_num_rows($result1) > 0) {
             $_SESSION['email'] = $email;
             $_SESSION['pass'] = $password;
-            $_SESSION['idT'] = $row['codice'];
-            echo 'Accesso consentito area riservata (TEAM)';
+            $_SESSION['idT'] = $row1['codice'];
             header("location: http://localhost//Civic-Sense/Team/index.php");
           } else {
-            echo "ATTENZIONE: La password o l'email inserita non sono corrette!";
           }
         }
       }
     }
+    mysqli_close($conn);
   }
-  mysqli_close($conn);
-
   ?>

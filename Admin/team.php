@@ -272,18 +272,11 @@
 
             $conn = mysqli_connect("localhost", "root", "", "civicsense") or die("Connessione non riuscita");
 
-
-
-
             # ---INSERIMENTO DA FORM ---
-
-            #salvo i nomi (name) dei form in una variabile php, richiamando i valori dal form con _POST (se nel fotm era 'method=get' diventava $_GET)
-
-
 
             $email = (isset($_POST['email'])) ? $_POST['email'] : null;
             $nomi = (isset($_POST['nomi'])) ? $_POST['nomi'] : null;
-            $numeri = (isset($_POST['numero'])) ? $_POST['numero'] : null;
+            $npersone = (isset($_POST['numero'])) ? $_POST['numero'] : null;
             $pass = (isset($_POST['password'])) ? $_POST['password'] : null;
 
 
@@ -291,12 +284,9 @@
               if ($email && $nomi && $numeri && $pass !== null) {
                 #inserisco i valori salvati dal form nella query di inserimento
 
-                $query = "INSERT INTO team
-			          (email_t, npersone, nomi, password)
-			          VALUES
-			          ('$email','$numeri', '$nomi','$pass')";
+                $query = "INSERT INTO team (email_t, npersone, nomi, password) VALUES (?,?,?,?)";
                 $stmt = $conn->prepare($query);
-                $stmt->bind_param('ssss', $email, $numeri, $nomi, $pass);
+                $stmt->bind_param('ssss', $email, $npersone, $nomi, $pass);
                 $result = $stmt->execute();
 
                 if ($result) {
@@ -308,24 +298,6 @@
             }
 
             ?>
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
 
           </div>
 
@@ -345,17 +317,6 @@
 
           <!-- Demo scripts for this page-->
           <script src="js/demo/datatables-demo.js"></script>
-
-
-
-
-
-
-
-
-
-
-
 
 </body>
 
