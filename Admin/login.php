@@ -97,8 +97,8 @@
 
         $query1 = "SELECT * FROM team where email_t = ? and password = ?";
         $stmt1 = $conn->prepare($query1);
-        $encrypted_password = openssl_encrypt($password, "AES-128-ECB", $var['SECRETKEY']);
-        $stmt1->bind_param('ss', $email, $encrypted_password);
+        $encrypted_password1 = openssl_encrypt($password, "AES-128-ECB", $var['SECRETKEY']);
+        $stmt1->bind_param('ss', $email, $encrypted_password1);
         $result_query1 = $stmt1->execute();
 
         if ($result_query1) {
