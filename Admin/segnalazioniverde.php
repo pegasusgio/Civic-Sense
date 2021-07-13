@@ -153,187 +153,184 @@
             padding: 0;
           }
         </style>
-        </head>
 
-        <body>
+        <div id="map"></div>
 
-          <div id="map"></div>
-
-          <?php
-          $locations = array();
-          $conn = mysqli_connect("localhost", "root", "", "civicsense") or die("Connessione fallita");
-          $sql = "SELECT * FROM segnalazioni where tipo = '1' ";
-          $result = mysqli_query($conn, $sql);
-          if ($result) {
-            while ($row = mysqli_fetch_assoc($result)) {
-              $id = filter_var($row['id'], FILTER_SANITIZE_NUMBER_INT);
-              $longitudine = filter_var($row['longitudine'], FILTER_SANITIZE_STRING);
-              $latitudine = filter_var($row['latitudine'], FILTER_SANITIZE_STRING);
-              $descrizione = filter_var($row['descrizione'], FILTER_SANITIZE_STRING);
-              $locations[] = array('id' => $id, 'lat' => $latitudine, 'lon' => $longitudine, 'descrizione' => $descrizione);
-            }
-            /* Convert data to json */
-            $markers = json_encode($locations);
-            mysqli_close($conn);
+        <?php
+        $locations = array();
+        $conn = mysqli_connect("localhost", "root", "", "civicsense") or die("Connessione fallita");
+        $query = "SELECT * FROM segnalazioni where tipo = '1' ";
+        $result_query = mysqli_query($conn, $query);
+        if ($result_query) {
+          while ($row = mysqli_fetch_assoc($result)) {
+            $id = filter_var($row['id'], FILTER_SANITIZE_NUMBER_INT);
+            $longitudine = filter_var($row['longitudine'], FILTER_SANITIZE_STRING);
+            $latitudine = filter_var($row['latitudine'], FILTER_SANITIZE_STRING);
+            $descrizione = filter_var($row['descrizione'], FILTER_SANITIZE_STRING);
+            $locations[] = array('id' => $id, 'lat' => $latitudine, 'lon' => $longitudine, 'descrizione' => $descrizione);
           }
+          /* Convert data to json */
+          $markers = json_encode($locations);
+          mysqli_close($conn);
+        }
+        ?>
+        <script type='text/javascript'>
+          <?php
+          echo "var markers=$markers;\n";
           ?>
-          <script type='text/javascript'>
-            <?php
-            echo "var markers=$markers;\n";
-            ?>
 
-            function initMap() {
+          function initMap() {
 
-              var latlng = new google.maps.LatLng(41.003656, 16.870685);
-              var myOptions = {
-                zoom: 8,
-                center: latlng,
-                mapTypeId: google.maps.MapTypeId.ROADMAP,
-                mapTypeControl: false
-              };
+            var latlng = new google.maps.LatLng(41.003656, 16.870685);
+            var myOptions = {
+              zoom: 8,
+              center: latlng,
+              mapTypeId: google.maps.MapTypeId.ROADMAP,
+              mapTypeControl: false
+            };
 
-              var map = new google.maps.Map(document.getElementById("map"), myOptions);
+            var map = new google.maps.Map(document.getElementById("map"), myOptions);
 
-              var infoWindow = new google.maps.InfoWindow();
+            var infoWindow = new google.maps.InfoWindow();
 
-              for (var o in markers) {
+            for (var o in markers) {
 
-                lat = parseFloat(markers[o].lat);
-                lon = parseFloat(markers[o].lon);
-                id = parseInt(markers[o].id);
-                descrizione = markers[o].descrizione;
+              lat = parseFloat(markers[o].lat);
+              lon = parseFloat(markers[o].lon);
+              id = parseInt(markers[o].id);
+              descrizione = markers[o].descrizione;
 
-                var marker = new google.maps.Marker({
-                  position: new google.maps.LatLng(lat, lon),
-                  id: id,
-                  map: map
+              var marker = new google.maps.Marker({
+                position: new google.maps.LatLng(lat, lon),
+                id: id,
+                map: map
+              });
+              (function(marker, lat, lon, descrizione) {
+                google.maps.event.addListener(marker, "click", function(e) {
+                  //Wrap the content inside an HTML DIV in order to set height and width of InfoWindow.
+                  infoWindow.setContent('<b>Descrizione della segnalazione: </b>' + descrizione + '<br>' +
+                    '<b>Latitudine: </b>' + lat + '<br>' +
+                    '<b>Longitudine: </b>' + lon + '<br>');
+                  infoWindow.open(map, marker);
                 });
-                (function(marker, lat, lon, descrizione) {
-                  google.maps.event.addListener(marker, "click", function(e) {
-                    //Wrap the content inside an HTML DIV in order to set height and width of InfoWindow.
-                    infoWindow.setContent('<b>Descrizione della segnalazione: </b>' + descrizione + '<br>' +
-                      '<b>Latitudine: </b>' + lat + '<br>' +
-                      '<b>Longitudine: </b>' + lon + '<br>');
-                    infoWindow.open(map, marker);
-                  });
-                })(marker, lat, lon, descrizione);
-              }
+              })(marker, lat, lon, descrizione);
             }
-          </script>
+          }
+        </script>
 
-          <script async src="https://maps.googleapis.com/maps/api/js?key=AIzaSyDqWwEj5v1fUTcMI7C-xG2dt-jYs7pRnTk&callback=initMap">
-          </script>
+        <script async src="https://maps.googleapis.com/maps/api/js?key=AIzaSyDqWwEj5v1fUTcMI7C-xG2dt-jYs7pRnTk&callback=initMap">
+        </script>
 
-          <!-- FINE MAPPA -->
+        <!-- FINE MAPPA -->
 
+        <br><br><br>
+        <!-- Tabella -->
+        <div class="card-header">
+          <i class="fas fa-table"></i>
+          Tabella Segnalazioni
+        </div>
+        <br>
+
+        <div class="table-responsive" style="overflow-x: scroll; ">
+          <table class="table table-bordered" id="dataTable" width="100%" cellspacing="0" style="background-color:white;">
+            <thead>
+              <tr>
+                <th>CODICE SEGNALAZIONE</th>
+                <th>DATA</th>
+                <th>ORA</th>
+                <th>VIA</th>
+                <th>DESCRIZIONE</th>
+                <th>FOTO</th>
+                <th>E-MAIL</th>
+                <th>STATO</th>
+                <th>TEAM</th>
+                <th>GRAVITA'</th>
+              </tr>
+            </thead>
+
+            <?php include("php/segnalazioniverde.php"); ?>
+
+          </table>
+
+          <!-- MODIFICA GRAVITA' -->
+
+          <!-- inserimento da form del codice della segnalazione da modificare -->
           <br><br><br>
-          <!-- Tabella -->
+
           <div class="card-header">
             <i class="fas fa-table"></i>
-            Tabella Segnalazioni
+            Modifica gravità di una segnalazione
           </div>
-          <br>
 
-          <div class="table-responsive" style="overflow-x: scroll; ">
-            <table class="table table-bordered" id="dataTable" width="100%" cellspacing="0" style="background-color:white;">
-              <thead>
-                <tr>
-                  <th>CODICE SEGNALAZIONE</th>
-                  <th>DATA</th>
-                  <th>ORA</th>
-                  <th>VIA</th>
-                  <th>DESCRIZIONE</th>
-                  <th>FOTO</th>
-                  <th>E-MAIL</th>
-                  <th>STATO</th>
-                  <th>TEAM</th>
-                  <th>GRAVITA'</th>
-                </tr>
-              </thead>
+          <form method="post" action="segnalazioniverde.php" style=" margin-top:5%; margin-left:5%">
+            <b> CODICE SEGNALAZIONE DA MODIFICARE: </b> <input type="text" name="idt"><br><br>
+            <b> INSERISCI LA GRAVITA' MODIFICATA: </b> <select class="text" name="gravit">
 
-              <?php include("php/segnalazioniverde.php"); ?>
+              <option value="Alta">Alta</option>
+              <option value="Media">Media</option>
+              <option value="Bassa">Bassa</option>
 
-            </table>
+            </select>
 
-            <!-- MODIFICA GRAVITA' -->
+            <input type="submit" name="submit" class="btn btn-primary btn-block" style="width:15%; margin-top:5%;">
 
-            <!-- inserimento da form del codice della segnalazione da modificare -->
-            <br><br><br>
+          </form>
 
-            <div class="card-header">
-              <i class="fas fa-table"></i>
-              Modifica gravità di una segnalazione
-            </div>
+          <?php
 
-            <form method="post" action="segnalazioniverde.php" style=" margin-top:5%; margin-left:5%">
-              <b> CODICE SEGNALAZIONE DA MODIFICARE: </b> <input type="text" name="idt"><br><br>
-              <b> INSERISCI LA GRAVITA' MODIFICATA: </b> <select class="text" name="gravit">
+          $conn = mysqli_connect("localhost", "root", "", "civicsense") or die("Connessione non riuscita");
 
-                <option value="Alta">Alta</option>
-                <option value="Media">Media</option>
-                <option value="Bassa">Bassa</option>
-
-              </select>
-
-              <input type="submit" name="submit" class="btn btn-primary btn-block" style="width:15%; margin-top:5%;">
-
-            </form>
-
-            <?php
-
-            $conn = mysqli_connect("localhost", "root", "", "civicsense") or die("Connessione non riuscita");
-
-            $idt = (isset($_POST['idt'])) ? $_POST['idt'] : null;
-            $grav = (isset($_POST['gravit'])) ? $_POST['gravit'] : null;
+          $idt = (isset($_POST['idt'])) ? $_POST['idt'] : null;
+          $grav = (isset($_POST['gravit'])) ? $_POST['gravit'] : null;
 
 
-            if (isset($_POST['submit'])) {
+          if (isset($_POST['submit'])) {
 
-              if ($idt && $grav !== null) {
+            if ($idt && $grav !== null) {
 
-                $resultC = mysqli_query($conn, "SELECT * FROM segnalazioni WHERE tipo = '1'");
-                if ($resultC) {
-                  $row = mysqli_fetch_assoc($resultC);
-                  if ($id == $row['id']) {
-                    $query = "UPDATE segnalazioni SET gravita = ? WHERE id = ?";
-                    $stmt = $conn->prepare($query);
-                    $stmt->bind_param('ss', $grav, $idt);
-                    $result = $stmt->execute();
+              $resultC = mysqli_query($conn, "SELECT * FROM segnalazioni WHERE tipo = '1'");
+              if ($resultC) {
+                $row = mysqli_fetch_assoc($resultC);
+                if ($id == $row['id']) {
+                  $query = "UPDATE segnalazioni SET gravita = ? WHERE id = ?";
+                  $stmt = $conn->prepare($query);
+                  $stmt->bind_param('ss', $grav, $idt);
+                  $result = $stmt->execute();
 
-                    if ($query) {
-                      echo ("<br><b><br><p> <center> <font color=black font face='Courier'> Aggiornamento avvenuto correttamente. Ricarica la pagina per aggiornare la tabella.</b></center></p><br><br> ");
-                    }
-                  } else {
-                    echo "<p> <center> <font color=black font face='Courier'> Inserisci ID esistente.</b></center></p>";
+                  if ($query) {
+                    echo ("<br><b><br><p> <center> <font color=black font face='Courier'> Aggiornamento avvenuto correttamente. Ricarica la pagina per aggiornare la tabella.</b></center></p><br><br> ");
                   }
+                } else {
+                  echo "<p> <center> <font color=black font face='Courier'> Inserisci ID esistente.</b></center></p>";
                 }
-              } else {
-                echo ("<p> <center> <font color=black font face='Courier'> Compila tutti i campi.</b></center></p>");
               }
+            } else {
+              echo ("<p> <center> <font color=black font face='Courier'> Compila tutti i campi.</b></center></p>");
             }
+          }
 
-            ?>
-            <br><br><br>
+          ?>
+          <br><br><br>
 
-            <div class="card-header">
-              <i class="fas fa-table"></i>
-              Statistiche annuali per le segnalazioni delle aree verdi
-            </div>
-            <br><br>
-            <!-- GRAFICO -->
-
-            <script src="//www.amcharts.com/lib/3/amcharts.js"></script>
-            <script src="//www.amcharts.com/lib/3/serial.js"></script>
-            <script src="//www.amcharts.com/lib/3/themes/light.js"></script>
-
-            <div id="chartdiv"></div>
-
-            <?php include("php/graficoverde.php"); ?>
-
-            <!-- FINE GRAFICO -->
-
-            <br><br>
+          <div class="card-header">
+            <i class="fas fa-table"></i>
+            Statistiche annuali per le segnalazioni delle aree verdi
           </div>
+          <br><br>
+          <!-- GRAFICO -->
+
+          <script src="//www.amcharts.com/lib/3/amcharts.js"></script>
+          <script src="//www.amcharts.com/lib/3/serial.js"></script>
+          <script src="//www.amcharts.com/lib/3/themes/light.js"></script>
+
+          <div id="chartdiv"></div>
+
+          <?php include("php/graficoverde.php"); ?>
+
+          <!-- FINE GRAFICO -->
+
+          <br><br>
+        </div>
       </div>
     </div>
 
@@ -353,17 +350,6 @@
 
     <!-- Demo scripts for this page-->
     <script src="js/demo/datatables-demo.js"></script>
-
-
-
-
-
-
-
-
-
-
-
 
 </body>
 

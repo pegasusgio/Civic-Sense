@@ -5,8 +5,10 @@ session_start();
 //classi per l'invio dell'email (PHPMailer 5.2)
 
 
-require('phpmailer/class.phpmailer.php');
-include('phpmailer/class.smtp.php');
+use Exception as GlobalException;
+use PHPMailer\PHPMailer\PHPMailer;
+use PHPMailer\PHPMailer\Exception;
+
 $conn = new mysqli("localhost", "root", "", "civicsense") or die("Connessione non riuscita");
 
 if (isset($_POST['id']) && isset($_POST['stato'])) {
@@ -15,18 +17,23 @@ if (isset($_POST['id']) && isset($_POST['stato'])) {
 	$email = $_SESSION['email'];
 	$pass = $_SESSION['pass'];
 
-	$query = "SELECT * FROM segnalazioni WHERE id =$idS";
+	$query = "SELECT * FROM segnalazioni WHERE id = ?";
+	$stmt = $conn->prepare($query);
+	$stmt->bind_param('s', $idS);
+	$result_query = $stmt->execute();
 
-	$result = $conn->query($query);
-
-	if ($result) {
+	if ($result_query) {
 		//da team a ente e utente
+		$result = $stmt->get_result();
 		$row = $result->fetch_assoc();
-		if ($row['stato'] == "In attesa" && $stato == "In risoluzione") { //confronta stato attuale e quello da modificare
-			$sql = "UPDATE segnalazioni SET stato = '$stato' WHERE id = $idS"; //esegui l'aggiornamento
-			$result1 = $conn->query($sql);
 
-			if ($result1) {
+		if ($row['stato'] == "In attesa" && $stato == "In risoluzione") { //confronta stato attuale e quello da modificare
+			$query1 = "UPDATE segnalazioni SET stato = ? WHERE id = ?"; //esegui l'aggiornamento
+			$stmt1 = $conn->prepare($query1);
+			$stmt1->bind_param('ss', $stato, $idS);
+			$result_query1 = $stmt1->execute();
+
+			if ($result_query1) {
 				echo ("<br><b><br><p> <center> <font color=black font face='Courier'> Aggiornamento avvenuto correttamente. Ricarica la pagina per aggiornare la tabella.</b></center></p><br><br> ");
 				$mail = new PHPMailer(true);
 
@@ -47,18 +54,21 @@ if (isset($_POST['id']) && isset($_POST['stato'])) {
 					$mail->Send();
 					echo "Message Sent OK";
 					header("location: http://localhost/Civic-Sense/Team/index.php");
-				} catch (phpmailerException $e) {
-					echo $e->errorMessage(); //Errori da PHPMailer
 				} catch (Exception $e) {
+					echo $e->errorMessage(); //Errori da PHPMailer
+				} catch (GlobalException $e) {
 					echo $e->getMessage(); //Errori da altrove
 				}
 			}
 		}
 		//da team a ente e utente
 		else if ($row['stato'] == "In risoluzione" && $stato == "Risolto") {
-			$sql = "UPDATE segnalazioni SET stato = '$stato' WHERE id = $idS"; //esegui l'aggiornamento
-			$result1 = $conn->query($sql);
-			if ($result1) {
+			$query2 = "UPDATE segnalazioni SET stato = ? WHERE id = ?"; //esegui l'aggiornamento
+			$stmt2 = $conn->prepare($query2);
+			$stmt2->bind_param('ss', $stato, $idS);
+			$result_query2 = $stmt2->execute();
+
+			if ($result_query2) {
 				echo ("<br><b><br><p> <center> <font color=black font face='Courier'> Aggiornamento avvenuto correttamente. Ricarica la pagina per aggiornare la tabella.</b></center></p><br><br> ");
 				$mail = new PHPMailer(true);
 
@@ -78,9 +88,9 @@ if (isset($_POST['id']) && isset($_POST['stato'])) {
 					$mail->Body = "Il problema presente in " . $row['via'] . " è stata risolta"; //Messaggio da inviare
 					$mail->Send();
 					header("location: http://localhost/Civic-Sense/Team/index.php");
-				} catch (phpmailerException $e) {
-					echo $e->errorMessage(); //Errori da PHPMailer
 				} catch (Exception $e) {
+					echo $e->errorMessage(); //Errori da PHPMailer
+				} catch (GlobalException $e) {
 					echo $e->getMessage(); //Errori da altrove
 				}
 			}

@@ -13,19 +13,19 @@
   <title>SB Admin - Tables</title>
 
   <!-- Bootstrap core CSS-->
-  <link href="vendor/bootstrap/css/bootstrap.min.css" rel="stylesheet">
+  <link href="../Admin/vendor/bootstrap/css/bootstrap.min.css" rel="stylesheet">
 
   <!-- Custom fonts for this template-->
-  <link href="vendor/fontawesome-free/css/all.min.css" rel="stylesheet" type="text/css">
+  <link href="../Admin/vendor/fontawesome-free/css/all.min.css" rel="stylesheet" type="text/css">
 
   <!-- Page level plugin CSS-->
-  <link href="vendor/datatables/dataTables.bootstrap4.css" rel="stylesheet">
+  <link href="../Admin/vendor/datatables/dataTables.bootstrap4.css" rel="stylesheet">
 
   <!-- Custom styles for this template-->
-  <link href="css/sb-admin.css" rel="stylesheet">
+  <link href="..Admin/css/sb-admin.css" rel="stylesheet">
 
   <!-- grafico -->
-  <link rel="stylesheet" href="css/graficostyle.css">
+  <link rel="stylesheet" href="..Admin/css/graficostyle.css">
 
 
 </head>
@@ -95,64 +95,80 @@
         }
       </style>
 
-
       <div id="map"></div>
 
-      <script>
+      <?php
+      $locations = array();
+      $conn = mysqli_connect("localhost", "root", "", "civicsense") or die("Connessione fallita");
+      $query = "SELECT * FROM segnalazioni WHERE team = ?";
+      $stmt = $conn->prepare($query);
+      $stmt->bind_param('s', $_SESSION['idT']);
+      $result_query = $stmt->execute();
+
+      if ($result_query) {
+        $result = $stmt->get_result();
+
+        while ($row = mysqli_fetch_assoc($result)) {
+          $id = filter_var($row['id'], FILTER_SANITIZE_NUMBER_INT);
+          $longitudine = filter_var($row['longitudine'], FILTER_SANITIZE_STRING);
+          $latitudine = filter_var($row['latitudine'], FILTER_SANITIZE_STRING);
+          $descrizione = filter_var($row['descrizione'], FILTER_SANITIZE_STRING);
+          $locations[] = array('id' => $id, 'lat' => $latitudine, 'lon' => $longitudine, 'descrizione' => $descrizione);
+        }
+        /* Convert data to json */
+        $markers = json_encode($locations);
+        mysqli_close($conn);
+      }
+      ?>
+      <script type='text/javascript'>
+        <?php
+        echo "var markers=$markers;\n";
+        ?>
+
         function initMap() {
-          var location = new google.maps.LatLng(40.382003, 17.367155);
-          var map = new google.maps.Map(document.getElementById("map"), {
-            zoom: 18,
-            center: location
-          });
-          <?php
-          $conn = mysqli_connect("localhost", "root", "", "civicsense") or die("Connessione fallita");
 
-          if (isset($_SESSION['idT'])) {
-            $query = "SELECT * FROM segnalazioni WHERE team = ?";
-            $stmt = $conn->prepare($query);
-            $stmt->bind_param('s', $_SESSION['idT']);
-            $result_query = $stmt->execute();
-            if ($result_query) {
-              $result = $stmt->get_result();
-              while ($row = mysqli_fetch_assoc($result)) {
-                echo "
-            var location = new google.maps.LatLng(" . filter_var($row['latitudine'], FILTER_SANITIZE_NUMBER_FLOAT) . "," . filter_var($row['longitudine'], FILTER_SANITIZE_NUMBER_FLOAT) . ");
+          var latlng = new google.maps.LatLng(41.003656, 16.870685);
+          var myOptions = {
+            zoom: 8,
+            center: latlng,
+            mapTypeId: google.maps.MapTypeId.ROADMAP,
+            mapTypeControl: false
+          };
+
+          var map = new google.maps.Map(document.getElementById("map"), myOptions);
+
+          var infoWindow = new google.maps.InfoWindow();
+
+          for (var o in markers) {
+
+            lat = parseFloat(markers[o].lat);
+            lon = parseFloat(markers[o].lon);
+            id = parseInt(markers[o].id);
+            descrizione = markers[o].descrizione;
+
             var marker = new google.maps.Marker({
-              map: map,
-              position: location
-            }); ";
-              }
-              mysqli_close($conn);
-            }
-          }
-          ?>
-          /*var marker = new google.maps.Marker({
-                  map: map,
-                  position: location
+              position: new google.maps.LatLng(lat, lon),
+              id: id,
+              map: map
+            });
+            (function(marker, lat, lon, descrizione) {
+              google.maps.event.addListener(marker, "click", function(e) {
+                //Wrap the content inside an HTML DIV in order to set height and width of InfoWindow.
+                infoWindow.setContent('<b>Descrizione della segnalazione: </b>' + descrizione + '<br>' +
+                  '<b>Latitudine: </b>' + lat + '<br>' +
+                  '<b>Longitudine: </b>' + lon + '<br>');
+                infoWindow.open(map, marker);
               });
-          var marker1 = new google.maps.Marker({
-            map: map,
-            position: location1
-          });*/
-
+            })(marker, lat, lon, descrizione);
+          }
         }
       </script>
 
 
-      <script async defer src="https://maps.googleapis.com/maps/api/js?key=AIzaSyB7GIu4drL85xcaTdq8hAtRzVWjbKxs3NQ&callback=initMap">
+      <script async src="https://maps.googleapis.com/maps/api/js?key=AIzaSyDqWwEj5v1fUTcMI7C-xG2dt-jYs7pRnTk&callback=initMap">
       </script>
 
-
-
-
-
       <!-- FINE MAPPA -->
-
-
-
-
-
 
       <br><br><br>
 
@@ -181,15 +197,7 @@
 
             <?php include("php/segnalazione.php"); ?>
 
-
           </table>
-
-
-
-
-
-
-
 
           <!-- MODIFICA STATO SEGNALAZIONE -->
 
@@ -214,39 +222,27 @@
 
           <br><br><br>
 
-
           <br><br>
         </div>
       </div>
     </div>
 
     <!-- Bootstrap core JavaScript-->
-    <script src="vendor/jquery/jquery.min.js"></script>
-    <script src="vendor/bootstrap/js/bootstrap.bundle.min.js"></script>
+    <script src="..Admin/vendor/jquery/jquery.min.js"></script>
+    <script src="..Admin/vendor/bootstrap/js/bootstrap.bundle.min.js"></script>
 
     <!-- Core plugin JavaScript-->
-    <script src="vendor/jquery-easing/jquery.easing.min.js"></script>
+    <script src="..Admin/vendor/jquery-easing/jquery.easing.min.js"></script>
 
     <!-- Page level plugin JavaScript-->
-    <script src="vendor/datatables/jquery.dataTables.js"></script>
-    <script src="vendor/datatables/dataTables.bootstrap4.js"></script>
+    <script src="..Admin/vendor/datatables/jquery.dataTables.js"></script>
+    <script src="..Admin/vendor/datatables/dataTables.bootstrap4.js"></script>
 
     <!-- Custom scripts for all pages-->
-    <script src="js/sb-admin.min.js"></script>
+    <script src="..Admin/js/sb-admin.min.js"></script>
 
     <!-- Demo scripts for this page-->
-    <script src="js/demo/datatables-demo.js"></script>
-
-
-
-
-
-
-
-
-
-
-
+    <script src="..Admin/js/demo/datatables-demo.js"></script>
 
 </body>
 
