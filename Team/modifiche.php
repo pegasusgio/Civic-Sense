@@ -1,9 +1,7 @@
-<?php
-session_start();
+<?php session_start();
 //puoi modificare la pagina per farla funzionare nella tua macchina
 //adatto a tutti i domini (GMAIL,LIBERO.HOTMAIL)
-//classi per l'invio dell'email (PHPMailer 5.2)
-
+//classi per l'invio dell'email (PHPMailer 6.5.0)
 
 use Exception as GlobalException;
 use PHPMailer\PHPMailer\PHPMailer;
@@ -15,7 +13,7 @@ if (isset($_POST['id']) && isset($_POST['stato'])) {
 	$idS = $_POST['id'];
 	$stato = $_POST['stato'];
 	$email = $_SESSION['email'];
-	$pass = $_SESSION['pass'];
+	$pass = $_SESSION['password'];
 
 	$query = "SELECT * FROM segnalazioni WHERE id = ?";
 	$stmt = $conn->prepare($query);

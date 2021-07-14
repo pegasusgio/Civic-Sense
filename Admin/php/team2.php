@@ -1,4 +1,5 @@
 <?php
+
 $conn = mysqli_connect("localhost", "root", "", "civicsense") or die("Connessione non riuscita");
 
 $query = mysqli_query($conn, "SELECT * FROM segnalazioni WHERE gravita IS NOT NULL AND team IS NULL");

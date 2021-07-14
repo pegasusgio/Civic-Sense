@@ -1,5 +1,4 @@
-<?php
-session_start();
+<?php session_start();
 //puoi modificare la pagina per farla funzionare nella tua macchina
 //adatto a tutti i domini (GMAIL,LIBERO.HOTMAIL)
 //classi per l'invio dell'email (PHPMailer 5.2)
@@ -109,7 +108,7 @@ if (isset($_POST['id']) && isset($_POST['stato']) && isset($_POST['codice'])) {
 							$mail->SMTPKeepAlive = true;
 							$mail->Mailer = "smtp";
 							$mail->Username   = $_SESSION['email'];
-							$mail->Password   = $_SESSION['pass'];
+							$mail->Password   = $_SESSION['password'];
 							while ($row = mysqli_fetch_assoc($result6)) {
 								$mail->AddAddress($row6['email']); //ente
 							}

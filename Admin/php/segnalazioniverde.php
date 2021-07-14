@@ -1,4 +1,5 @@
 <?php
+
 $conn = mysqli_connect("localhost", "root", "", "civicsense") or die("Connessione non riuscita");
 
 mysqli_select_db($conn, "civicsense") or die("DataBase non trovato"); #connessione al db

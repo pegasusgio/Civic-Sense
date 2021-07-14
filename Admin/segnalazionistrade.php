@@ -157,6 +157,7 @@
         $conn = mysqli_connect("localhost", "root", "", "civicsense") or die("Connessione fallita");
         $query = "SELECT * FROM segnalazioni where tipo = '3' ";
         $result = mysqli_query($conn, $query);
+
         if ($result) {
           while ($row = mysqli_fetch_assoc($result)) {
             $id = filter_var($row['id'], FILTER_SANITIZE_NUMBER_INT);

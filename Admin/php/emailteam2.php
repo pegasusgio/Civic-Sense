@@ -1,4 +1,3 @@
-
 <?php
 
 $conn = mysqli_connect("localhost", "root", "") or die("Connessione non riuscita");
@@ -20,4 +19,3 @@ if ($id && $team !== null) {
     echo ('<a href="mailto: ' . $result . '"><center> Clicca qui per mandare un avviso al team. </center></a>');
   }
 }
-?>

@@ -1,11 +1,12 @@
 <?php
+
 $conn = mysqli_connect("localhost", "root", "") or die("Connessione non riuscita");
 
 mysqli_select_db($conn, "civicsense") or die("DataBase non trovato"); #connessione al db
 
 $query = "SELECT * FROM segnalazioni WHERE stato <> 'Risolto' AND team = ?";
 $stmt = $conn->prepare($query);
-$stmt->bind_param('s', $_SESSION['idT']);
+$stmt->bind_param('s', $_SESSION['id']);
 $result_query = $stmt->execute();
 
 if ($result_query) {

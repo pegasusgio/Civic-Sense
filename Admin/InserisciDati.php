@@ -1,4 +1,5 @@
 <?php
+
 $conn = new mysqli("localhost", "root", "", "civicsense");
 
 $upload_path = 'jpeg/';

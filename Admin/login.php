@@ -88,12 +88,11 @@
 
       if (mysqli_num_rows($result) > 0) {
 
-        echo 'Accesso consentito area riservata';
         $_SESSION['email'] = $email;
         $_SESSION['password'] = $password;
         $_SESSION['id'] = $row['id'];
         echo "Accesso consentito all'area riservata (ADMIN)";
-        echo '<script>window.location.href = "index.php";</script>';
+        header("location: http://localhost//Civic-Sense/Admin/index.php");
       } else {
         echo 'Nessun admin trovato con questa email o password. Controllo se invece esiste un Team.';
         $query1 = "SELECT * FROM team where email_t = ? and password = ?";
@@ -108,8 +107,8 @@
 
           if (mysqli_num_rows($result1) > 0) {
             $_SESSION['email'] = $email;
-            $_SESSION['pass'] = $password;
-            $_SESSION['idT'] = $row1['codice'];
+            $_SESSION['password'] = $password;
+            $_SESSION['id'] = $row1['codice'];
             echo "Accesso consentito all'area riservata (TEAM)";
             header("location: http://localhost//Civic-Sense/Team/index.php");
           } else {

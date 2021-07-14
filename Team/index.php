@@ -22,10 +22,10 @@
   <link href="../Admin/vendor/datatables/dataTables.bootstrap4.css" rel="stylesheet">
 
   <!-- Custom styles for this template-->
-  <link href="..Admin/css/sb-admin.css" rel="stylesheet">
+  <link href="../Admin/css/sb-admin.css" rel="stylesheet">
 
   <!-- grafico -->
-  <link rel="stylesheet" href="..Admin/css/graficostyle.css">
+  <link rel="stylesheet" href="../Admin//css//graficostyle.css">
 
 
 </head>
@@ -66,7 +66,7 @@
         <div class="modal-body">Clicca "Logout" per uscire dal sito.</div>
         <div class="modal-footer">
           <button class="btn btn-secondary" type="button" data-dismiss="modal">Annulla</button>
-          <a class="btn btn-primary" href="login.php">Logout</a>
+          <a class="btn btn-primary" href="../Admin/login.php">Logout</a>
         </div>
       </div>
     </div>
@@ -102,7 +102,7 @@
       $conn = mysqli_connect("localhost", "root", "", "civicsense") or die("Connessione fallita");
       $query = "SELECT * FROM segnalazioni WHERE team = ?";
       $stmt = $conn->prepare($query);
-      $stmt->bind_param('s', $_SESSION['idT']);
+      $stmt->bind_param('s', $_SESSION['id']);
       $result_query = $stmt->execute();
 
       if ($result_query) {
@@ -228,21 +228,21 @@
     </div>
 
     <!-- Bootstrap core JavaScript-->
-    <script src="..Admin/vendor/jquery/jquery.min.js"></script>
-    <script src="..Admin/vendor/bootstrap/js/bootstrap.bundle.min.js"></script>
+    <script src="../Admin/vendor/jquery/jquery.min.js"></script>
+    <script src="../Admin/vendor/bootstrap/js/bootstrap.bundle.min.js"></script>
 
     <!-- Core plugin JavaScript-->
-    <script src="..Admin/vendor/jquery-easing/jquery.easing.min.js"></script>
+    <script src="../Admin/vendor/jquery-easing/jquery.easing.min.js"></script>
 
     <!-- Page level plugin JavaScript-->
-    <script src="..Admin/vendor/datatables/jquery.dataTables.js"></script>
-    <script src="..Admin/vendor/datatables/dataTables.bootstrap4.js"></script>
+    <script src="../Admin/vendor/datatables/jquery.dataTables.js"></script>
+    <script src="../Admin/vendor/datatables/dataTables.bootstrap4.js"></script>
 
     <!-- Custom scripts for all pages-->
-    <script src="..Admin/js/sb-admin.min.js"></script>
+    <script src="../Admin/js/sb-admin.min.js"></script>
 
     <!-- Demo scripts for this page-->
-    <script src="..Admin/js/demo/datatables-demo.js"></script>
+    <script src="../Admin/js/demo/datatables-demo.js"></script>
 
 </body>
 
