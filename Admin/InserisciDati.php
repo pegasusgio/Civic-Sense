@@ -49,7 +49,7 @@ if ($_SERVER['REQUEST_METHOD'] == 'POST') {
 		try {
 			if (move_uploaded_file($filetmp_name, $file_path)) {
 				$query = "INSERT INTO `segnalazioni`(`datainv`, `orainv`, `via`, `descrizione`, `foto`, `email`,`tipo`,`latitudine`,`longitudine`) 
-						VALUES (CURRENT_DATE,CURRENT_TIME,'?','?','{?}','?','?','?','?')";
+						VALUES (?,?,?,?,{?},?,?,?,?)";
 				$stmt = $conn->prepare($query);
 				$stmt->bind_param('sssssss', $via, $descrizione, $filename, $email, $tipo, $lat, $lng);
 				$result = $stmt->execute();
